@@ -8,7 +8,7 @@ public class Paint extends JFrame {
         super(windowName);
 
         //add panels or components
-        DrawArea drawArea = new DrawArea();
+        Drawer drawer = new Drawer();
         ToolBar shapeMenu = new ToolBar();
         ToolBar colours = new ToolBar();
 
@@ -16,7 +16,7 @@ public class Paint extends JFrame {
         setLayout(new GridLayout(1, 3));
 
         add(shapeMenu, BorderLayout.CENTER);
-        add(drawArea, BorderLayout.CENTER);
+        add(drawer, BorderLayout.CENTER);
         add(colours, BorderLayout.CENTER);
 
         //set features for frame
