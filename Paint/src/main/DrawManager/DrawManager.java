@@ -136,7 +136,7 @@ public class DrawManager extends JPanel {
 
     public void drawFromVecFile(String filepath){
         try {
-            Image newImage = IO.VecFileManaging.readVecFile(filepath);
+            Image newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
             newImage.drawAll(graphics);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

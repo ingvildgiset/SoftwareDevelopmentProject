@@ -17,7 +17,7 @@ import Shapes.Rectangle;
 
 public abstract class VecFileManaging {
 
-    public static Image readVecFile(String fileName) throws FileNotFoundException {
+    public static Image constructImageFromVecFile(String fileName) throws FileNotFoundException {
         //Create Image
         //config-fil med defaul størrelser her
         Image newImage = new Image(Config.IMAGE_HEIGHT, Config.IMAGE_WIDTH);
@@ -69,7 +69,7 @@ public abstract class VecFileManaging {
 
     }
 
-    public static void createVecFileFromeImage(String filename, Image image) throws IOException {
+    public static void createVecFileFromImage(String filename, Image image) throws IOException {
         FileWriter fw = new FileWriter("/Users/juliehaga/Desktop/SoftwareDevelopmentProject/Paint/src/Data/" + filename);
         List<Shapes> shapes = new ArrayList<Shapes>();
         shapes = image.getShapes();
@@ -86,6 +86,9 @@ public abstract class VecFileManaging {
     }
 
 
+
+
+    //only for testing
     public static void main(String[] args) {
         try {
             Image image = new Image(200,200);
@@ -96,9 +99,7 @@ public abstract class VecFileManaging {
            // Rectangle newRec = new Rectangle(0,0,100,100, Color.BLUE, true, Color.GREEN);
            // image.addShape(newRec);
 
-            createVecFileFromeImage("test.vec", image);
-
-            int a = 0;
+            createVecFileFromImage("test.vec", image);
         }
         catch (java.io.FileNotFoundException e){
             System.out.println(e);
