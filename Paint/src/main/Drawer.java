@@ -28,6 +28,9 @@ public class Drawer extends JPanel {
 
     // Mouse coordinates
     private Point clickPoint;
+    private Point currentPoint;
+
+    private Image image;
 
 
 
@@ -37,7 +40,7 @@ public class Drawer extends JPanel {
         shapeSelection = Shape.RECTANGLE;
         currentColor = Color.BLUE;
 
-        Image image = new Image(100, 100);
+        image = new Image(100, 100);
         System.out.println("vi har lagt et drawArea");
 
         addMouseListener(new MouseAdapter() {
@@ -59,45 +62,33 @@ public class Drawer extends JPanel {
             }
         });
 
+
+        addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent e) {
+                // save coord x,y when mouse is pressed
+                currentPoint= e.getPoint();
+                System.out.println("sluppet");
+                draw();
+                repaint();
+            }
+        });
+
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 Point dragPoint = e.getPoint();
                 int x = Math.min(clickPoint.x, dragPoint.x);
                 int y = Math.min(clickPoint.y, dragPoint.y);
 
-
-                switch(shapeSelection){
-                    case LINE:
-                        //create an object
-
-                        Line newLine = new Line(clickPoint.x, clickPoint.y, dragPoint.x, dragPoint.y, currentColor);
-                        //add object to image
-                        image.addShape(newLine);
-                        //draw on the screen
-                        graphics.drawLine(clickPoint.x, clickPoint.y, dragPoint.x, dragPoint.y);
-                        repaint();
-                        break;
-                    case RECTANGLE:
-                        //create an object
-                        Rectangle newRec = new Rectangle(clickPoint.x, clickPoint.y, dragPoint.x, dragPoint.y, currentColor);
-                        //add object to image
-                        image.addShape(newRec);
-                        //draw on the screen
-                        int width = Math.max(clickPoint.x, dragPoint.x) - x;
-                        int height = Math.max(clickPoint.y, dragPoint.y) - y;
-                        graphics.drawRect(x, y, width, height);
-                        repaint();
-                        break;
-                    default:
-                        System.out.println("Feil valg av shape");
-                }
-
+                //dette må vi lage sener
 
                 repaint();
 
 
             }
         });
+
+
+
     }
 
 
@@ -124,6 +115,27 @@ public class Drawer extends JPanel {
     public void updateColor(){
 
     }
+
+    public void draw(){
+        switch(shapeSelection){
+            case LINE:
+                graphics.drawLine(clickPoint.x, clickPoint.y, currentPoint.x, currentPoint.y);
+                repaint();
+                break;
+            case RECTANGLE:
+                int width = Math.abs(currentPoint.x - clickPoint.x);
+                int height = Math.abs(currentPoint.y - clickPoint.y);
+                System.out.println(width);
+                System.out.println(height);
+                graphics.drawRect(Math.min(clickPoint.x, currentPoint.x), Math.min(clickPoint.y, currentPoint.y), width, height);
+                repaint();
+                break;
+            default:
+                System.out.println("Feil valg av shape");
+        }
+
+    }
+
 
 
 
