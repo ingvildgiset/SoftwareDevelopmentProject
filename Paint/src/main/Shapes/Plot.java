@@ -9,13 +9,14 @@ public class Plot extends Shape {
 
 
     public Plot(int x, int y, Color color){
+        super(color);
         x = x;
         y = y;
         color = color;
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics2D g) {
         //her må vi gjøre noe greier
     }
 }
