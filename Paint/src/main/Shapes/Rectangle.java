@@ -15,13 +15,13 @@ public class Rectangle extends Shapes {
         this.y2 = y2;
         this.height = Math.abs(x1 - x2);
         this.width = Math.abs(y1 - y2);
-
     }
-
 
     @Override
     public String toVecFormat() {
-        return null;
+        String vec = colorToVecFormat();
+        vec = vec + "RECTANGLE " + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
+        return vec;
     }
 
     @Override

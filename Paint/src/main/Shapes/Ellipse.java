@@ -21,8 +21,11 @@ public class Ellipse extends Shapes{
 
     @Override
     public String toVecFormat() {
-        return null;
+        String vec = colorToVecFormat();
+        vec = vec + "ELLIPSe" + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
+        return vec;
     }
+
 
     public void draw(Graphics2D graphics){
         graphics.draw(new Ellipse2D.Double(Math.min(x1, x2), Math.min(y1, y2), width, height));

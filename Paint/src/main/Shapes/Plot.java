@@ -16,7 +16,9 @@ public class Plot extends Shapes {
 
     @Override
     public String toVecFormat() {
-        return null;
+        String vec = "PEN #" + Integer.toHexString(getBoarderColor().getRGB()).substring(2) + "\n";
+        vec = vec + "PLOT " + Double.toString(x) + " " + Double.toString(y) + "\n";
+        return vec;
     }
 
     @Override

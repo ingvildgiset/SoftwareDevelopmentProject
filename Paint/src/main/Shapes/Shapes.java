@@ -30,9 +30,23 @@ public abstract class Shapes {
         return fill;
     }
 
+
     //alle må implementere disse to metodene.
     //Disse vil være forskjellig for alle objektene. Vi lager de derfor abstrakte
     public abstract String toVecFormat();
     public abstract void draw(Graphics2D g);
+
+    public String colorToVecFormat() {
+        String vec = "";
+        if (getBoarderColor() != Color.BLACK){
+            vec +=  "PEN #" + Integer.toHexString(getBoarderColor().getRGB()).substring(2) + "\n";
+        }
+        if (isFilled()){
+            vec += "FILL #" + Integer.toHexString(getFillColor().getRGB()).substring(2) + "\n";
+        } else {
+            vec += "FILL OFF\n";
+        }
+        return vec;
+    }
 
 }
