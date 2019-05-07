@@ -1,4 +1,5 @@
 package IO;
 
-public class Commands {
+public enum Commands {
+    PEN, LINE, RECTANGLE, FILL
 }

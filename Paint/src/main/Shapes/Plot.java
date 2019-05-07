@@ -1,18 +1,17 @@
-package Shape;
+package Shapes;
 
 import java.awt.*;
 
-public class Plot extends Shape {
-    private int x;
-    private int y;
+public class Plot extends Shapes {
+    private double x;
+    private double y;
     Color color;
 
 
-    public Plot(int x, int y, Color color){
-        super(color);
-        x = x;
-        y = y;
-        color = color;
+    public Plot(double x, double y, Color color){
+        super(color, false, null);
+        this.x = x;
+        this.y = y;
     }
 
     @Override

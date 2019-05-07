@@ -1,20 +1,14 @@
-package Shape;
+package Shapes;
 
 import java.awt.*;
 
-public class Rectangle extends Shape{
-    private int x1;
-    private int y1;
-    private int x2;
-    private int y2;
-    private int width;
-    private int height;
-
-    private Color color;
+public class Rectangle extends Shapes {
+    private double x1, x2, y1, y2;
+    private double width, height;
 
 
-    public Rectangle(int x1, int y1, int x2, int y2, Color color){
-        super(color);
+    public Rectangle(double x1, double y1, double x2, double y2, Color boarderColor, boolean fill, Color fillColor){
+        super(boarderColor, fill, fillColor);
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -24,15 +18,9 @@ public class Rectangle extends Shape{
 
     }
 
-    public int getHeight(){
-        return height;
-    }
-    public int getWidth(){
-        return width;
-    }
 
     @Override
     public void draw(Graphics2D graphics ) {
-        graphics.drawRect(Math.min(x1, x2), Math.min(y1, y2), width, height);
+        graphics.drawRect((int) Math.round(Math.min(x1, x2)), (int) Math.round(Math.min(y1, y2)),  (int) Math.round(width), (int) Math.round(height));
     }
 }

@@ -40,6 +40,7 @@ public class ColorBar extends Applet {
         add(blackButton);
 
 
+
     }
 
 }

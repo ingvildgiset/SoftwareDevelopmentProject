@@ -1,14 +1,19 @@
-package Shape;
+package Shapes;
 
 import java.awt.*;
 
-public abstract class Shape {
+
+//burde kanskje ikke være en abstrakt klasse men et interface!!??!?!
+
+public abstract class Shapes {
+    private Color boarderColor, fillColor;
     private boolean fill;
-    private Color color;
 
 
-    Shape(Color color){
-        this.color = color;
+    Shapes(Color boarderColor, boolean fill, Color fillColor){
+        this.boarderColor = boarderColor;
+        this.fill = fill;
+        this.fillColor = fillColor;
     }
 
 

@@ -1,25 +1,24 @@
-package Shape;
+package Image;
 
+import Shapes.Shapes;
+
+import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Image {
     private int width;
     private int height;
-    private List<Shape> shapes;
+    private List<Shapes> shapes;
 
     public Image(int height, int width){
-        width = width;
-        height = height;
+        this.width = width;
+        this.height = height;
 
-        shapes = new ArrayList<Shape>();
+        shapes = new ArrayList<Shapes>();
 
-    }
-
-
-    public void addShape(Shape shape){
-        shapes.add(shape);
     }
 
     public int getWidth(ImageObserver observer) {
@@ -30,6 +29,22 @@ public class Image {
         return height;
     }
 
+    public void addShape(Shapes shape){
+        System.out.println("Skal legge til en ny shape");
+        shapes.add(shape);
+    }
 
+
+    public void drawAll(Graphics2D graphics){
+
+        for (Shapes shapeObj: shapes) {
+            shapeObj.draw(graphics);
+        }
+    }
 
 }
+
+
+
+
+

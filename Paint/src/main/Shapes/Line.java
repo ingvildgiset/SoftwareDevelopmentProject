@@ -1,8 +1,8 @@
-package Shape;
+package Shapes;
 
 import java.awt.*;
 
-public class Line extends Shape{
+public class Line extends Shapes {
     private double x1;
     private double y1;
     private double x2;
@@ -11,7 +11,7 @@ public class Line extends Shape{
 
 
     public Line(double x1, double y1, double x2, double y2, Color color){
-        super(color);
+        super(color, false, null);
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -20,7 +20,7 @@ public class Line extends Shape{
     }
 
     @Override
-    public void draw(Graphics2D g) {
-
+    public void draw(Graphics2D graphics ) {
+        graphics.drawLine((int) Math.round(x1), (int) Math.round(y1), (int) Math.round(x2), (int) Math.round(y2));
     }
 }
