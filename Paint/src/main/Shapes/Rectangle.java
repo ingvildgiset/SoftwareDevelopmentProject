@@ -20,7 +20,14 @@ public class Rectangle extends Shapes {
 
 
     @Override
+    public String toVecFormat() {
+        return null;
+    }
+
+    @Override
     public void draw(Graphics2D graphics ) {
         graphics.drawRect((int) Math.round(Math.min(x1, x2)), (int) Math.round(Math.min(y1, y2)),  (int) Math.round(width), (int) Math.round(height));
     }
+
+
 }

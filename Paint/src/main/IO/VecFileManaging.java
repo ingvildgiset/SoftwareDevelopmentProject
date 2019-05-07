@@ -1,18 +1,18 @@
 package IO;
 
 import Image.Image;
-import Shapes.Plot;
-import Shapes.Rectangle;
-import Shapes.Line;
-import Shapes.Ellipse;
+import Shapes.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.awt.*;
 import Config.Config;
-
-
+import Shapes.Rectangle;
 
 
 public abstract class VecFileManaging {
@@ -69,16 +69,44 @@ public abstract class VecFileManaging {
 
     }
 
+    public static void createVecFileFromeImage(String filename, Image image) throws IOException {
+        FileWriter fw = new FileWriter("/Users/juliehaga/Desktop/SoftwareDevelopmentProject/Paint/src/Data/" + filename);
+        List<Shapes> shapes = new ArrayList<Shapes>();
+        shapes = image.getShapes();
+
+        for(Shapes shapeObj: shapes){
+            //iterer gjennom alle objekter i bildet.
+            //bruker polymorfisme -> husk i rapport
+            String command = shapeObj.toVecFormat();
+            fw.write(command);
+        }
+
+        fw.close();
+
+    }
+
+
     public static void main(String[] args) {
         try {
-            Image rectImage = readVecFile("ellipse.vec");
+            Image image = new Image(200,200);
+            //alle shapes burde egentlig ta inn i prosent. Så får omregningen skje i draw?
+
+            Line newLine = new Line(0,0,0.5,0.5, Color.RED);
+            image.addShape(newLine);
+           // Rectangle newRec = new Rectangle(0,0,100,100, Color.BLUE, true, Color.GREEN);
+           // image.addShape(newRec);
+
+            createVecFileFromeImage("test.vec", image);
+
             int a = 0;
         }
         catch (java.io.FileNotFoundException e){
             System.out.println(e);
-    }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-}
+    }
 
 
 }

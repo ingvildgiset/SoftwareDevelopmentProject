@@ -6,6 +6,7 @@ import java.awt.*;
 //burde kanskje ikke være en abstrakt klasse men et interface!!??!?!
 
 public abstract class Shapes {
+    //alle må ha disse variablene
     private Color boarderColor, fillColor;
     private boolean fill;
 
@@ -16,18 +17,22 @@ public abstract class Shapes {
         this.fillColor = fillColor;
     }
 
-
-
-    public void setColor(){
-
-    }
-    public int getColor(){
-        return 0;
+    //Felles funksjoner
+    public Color getBoarderColor(){
+        return boarderColor;
     }
 
-
-
-    public void draw(Graphics2D g) {
-
+    public Color getFillColor(){
+        return fillColor;
     }
+
+    public boolean isFilled(){
+        return fill;
+    }
+
+    //alle må implementere disse to metodene.
+    //Disse vil være forskjellig for alle objektene. Vi lager de derfor abstrakte
+    public abstract String toVecFormat();
+    public abstract void draw(Graphics2D g);
+
 }

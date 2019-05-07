@@ -15,6 +15,11 @@ public class Plot extends Shapes {
     }
 
     @Override
+    public String toVecFormat() {
+        return null;
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         //her må vi gjøre noe greier
     }

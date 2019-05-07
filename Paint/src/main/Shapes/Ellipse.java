@@ -19,6 +19,11 @@ public class Ellipse extends Shapes{
     }
 
 
+    @Override
+    public String toVecFormat() {
+        return null;
+    }
+
     public void draw(Graphics2D graphics){
         graphics.draw(new Ellipse2D.Double(Math.min(x1, x2), Math.min(y1, y2), width, height));
     }
