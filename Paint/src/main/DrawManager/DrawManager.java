@@ -9,51 +9,37 @@ import java.awt.geom.Ellipse2D;
 import java.io.FileNotFoundException;
 
 import Image.Image;
-import Shapes.*;
 import Shapes.Rectangle;
+import Shapes.*;
 
 
 public class DrawManager extends JPanel {
-
-    //usikker på om vi trenger et image enda??
-    private java.awt.Image canvas;
+    private java.awt.Image canvas;          //the actual graphic image that we are drawing on
     private Graphics2D graphics;
 
-    //denne må oppdateres av toolBar
-    private static ShapeEnum shapeSelection;
-    private Color currentColor;
+    private ShapeTool shapeTool;
+
+
 
     // Mouse coordinates
     private Point clickPoint;
-    private Point currentPoint;
-
-    private Image image;
+    private Point relasePoint;
 
 
 
     public DrawManager() {
-        currentColor = Color.BLUE;
-        shapeSelection = ShapeEnum.PLOT;        //dette er default verdien
+        this.shapeTool = ShapeTool.PLOT;
 
-        image = new Image(100, 100);
-        System.out.println("vi har lagt et drawArea");
+
+        //dette er konstruktøren, så vet ikke om det blir helt riktig.
+        Image image = new Image(100, 100);
 
 
         addMouseListener(new MouseAdapter() {
+            //disse kan man kanskje flytte helt ut?
             public void mousePressed(MouseEvent e) {
                 // save coord x,y when mouse is pressed
                 clickPoint = e.getPoint();
-                System.out.println("pressed");
-
-                //create an object
-                Plot newplot = new Plot(clickPoint.x, clickPoint.y, currentColor);
-                //add object to image
-                image.addShape(newplot);
-                //drawFreeHand on the screen
-                //kan man farge bare ett punkt?????
-
-                //graphics.drawLine(clickPoint.x, clickPoint.y, clickPoint.x+1, clickPoint.y);
-                repaint();
             }
         });
 
@@ -61,9 +47,9 @@ public class DrawManager extends JPanel {
         addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 // save coord x,y when mouse is pressed
-                currentPoint= e.getPoint();
-                System.out.println("sluppet");
-                drawFreeHand();
+                relasePoint = e.getPoint();
+                //gir mer mening at image er en privat medlemsvariabel?
+                drawFreeHand(image);
                 repaint();
             }
         });
@@ -79,16 +65,12 @@ public class DrawManager extends JPanel {
 
     }
 
-    public static void updateShape(ShapeEnum newShape) {
-        shapeSelection = newShape;
-    }
 
     protected void paintComponent(Graphics g) {
         if (canvas == null) {
             // create image
             canvas = createImage(getSize().width, getSize().height);
             graphics = (Graphics2D) canvas.getGraphics();
-            graphics.setColor(currentColor);
             // enable antialiasing
             // clear drawFreeHand area
             //lag et blankt bilde
@@ -97,33 +79,47 @@ public class DrawManager extends JPanel {
         g.drawImage(canvas, 0, 0, null);
     }
 
-    public void drawFreeHand(){
+    public void drawFreeHand(Image image){
         //klarer man å bare skrive obj.draw her eller må man ta hensyn?
-        switch(shapeSelection){
+        switch(shapeTool){
             case PLOT:
-                System.out.println("tegner plot");
+                //add figure to image
+                Plot newPlot = new Plot(clickPoint.x, clickPoint.y, Color.BLACK);
+                image.addShape(newPlot);
+
+                //draw on Canvas
                 Ellipse2D plot = new Ellipse2D.Double(clickPoint.x, clickPoint.y, 3, 3);
-                System.out.println(plot);
                 graphics.fill(plot);
                 break;
             case LINE:
-                System.out.println("tegner linje");
-                graphics.drawLine(clickPoint.x, clickPoint.y, currentPoint.x, currentPoint.y);
+                //add figure to image
+                Line newLLine = new Line(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black);
+                image.addShape(newLLine);
+
+                //draw on Canvas
+                graphics.drawLine(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y);
                 repaint();
                 break;
             case RECTANGLE:
-                //her må det oppdateres med fill og evt fill farge
-                Rectangle rectangle = new Rectangle(clickPoint.x, clickPoint.y, currentPoint.x, currentPoint.y, currentColor, false, currentColor);
+                //add figure to image
+                Rectangle newRec = new Rectangle(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black, false, Color.BLACK);
+                image.addShape(newRec);
+
+                //draw on Canvas
+                Rectangle rectangle = new Rectangle(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black, false, Color.BLACK);
                 rectangle.draw(graphics);
                 repaint();
                 break;
             case ELLIPSE:
-                System.out.println("tegner ellipse");
-                int w = Math.abs(currentPoint.x - clickPoint.x);
-                int h = Math.abs(currentPoint.y - clickPoint.y);
-                graphics.draw(new Ellipse2D.Double(Math.min(clickPoint.x, currentPoint.x), Math.min(clickPoint.y, currentPoint.y), w, h));
-                break;
+                //add figure to image
+                Ellipse newEllipse = new Ellipse(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black, false, Color.BLACK);
+                image.addShape(newEllipse);
 
+                //draw on Canvas
+                int w = Math.abs(relasePoint.x - clickPoint.x);
+                int h = Math.abs(relasePoint.y - clickPoint.y);
+                graphics.draw(new Ellipse2D.Double(Math.min(clickPoint.x, relasePoint.x), Math.min(clickPoint.y, relasePoint.y), w, h));
+                break;
             case POLYGON:
                 //denne venter vi litt med.
                 System.out.println("tegner polygon");

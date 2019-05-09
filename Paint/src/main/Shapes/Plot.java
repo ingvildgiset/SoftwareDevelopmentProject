@@ -5,7 +5,6 @@ import java.awt.*;
 public class Plot extends Shapes {
     private double x;
     private double y;
-    Color color;
 
 
     public Plot(double x, double y, Color color){

@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import DrawManager.ShapeEnum;
 import DrawManager.DrawManager;
+import DrawManager.ShapeTool;
 
 
 public class ToolBar extends JPanel{
@@ -12,16 +12,14 @@ public class ToolBar extends JPanel{
         JRadioButton ellipseButton = new JRadioButton("Ellipse");
         JRadioButton rectangleButton = new JRadioButton("Rectangle");
         JRadioButton plotButton = new JRadioButton("Plot");
-        JRadioButton polygonButton = new JRadioButton("Polygon");
 
         //Må legge til at bare en checkbox kan velges.....
 
 
-        lineButton.addActionListener(e -> DrawManager.updateShape(ShapeEnum.LINE));
-        ellipseButton.addActionListener(e -> DrawManager.updateShape(ShapeEnum.ELLIPSE));
-        rectangleButton.addActionListener(e -> DrawManager.updateShape(ShapeEnum.RECTANGLE));
-        plotButton.addActionListener(e -> DrawManager.updateShape(ShapeEnum.PLOT));
-        polygonButton.addActionListener(e -> DrawManager.updateShape(ShapeEnum.POLYGON));
+        lineButton.addActionListener(e -> System.out.println("linje"));//DrawManager.updateShape(ShapeTool.LINE));
+        ellipseButton.addActionListener(e -> System.out.println("ellipse"));//DrawManager.updateShape(ShapeTool.ELLIPSE));
+        rectangleButton.addActionListener(e -> System.out.println("rectangel"));//DrawManager.updateShape(ShapeTool.RECTANGLE));
+        plotButton.addActionListener(e -> System.out.println("plot"));//DrawManager.updateShape(ShapeTool.PLOT));
 
         add(lineButton);
         add(ellipseButton);
