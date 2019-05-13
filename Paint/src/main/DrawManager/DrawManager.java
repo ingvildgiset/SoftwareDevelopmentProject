@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 
 import Image.Image;
 import Shapes.Rectangle;
@@ -19,16 +20,22 @@ public class DrawManager extends JPanel {
 
     private ShapeTool shapeTool;
 
+    private Image image;
 
 
     // Mouse coordinates
     private Point clickPoint;
     private Point relasePoint;
+    private Point dragPoint;
+
+    private Shapes currentShape;
+
 
 
 
     public DrawManager() {
-        this.shapeTool = ShapeTool.PLOT;
+        this.shapeTool = ShapeTool.RECTANGLE;
+        this.currentShape = null;
 
 
         //dette er konstruktøren, så vet ikke om det blir helt riktig.
@@ -36,48 +43,44 @@ public class DrawManager extends JPanel {
 
 
         addMouseListener(new MouseAdapter() {
-            //disse kan man kanskje flytte helt ut?
             public void mousePressed(MouseEvent e) {
-                // save coord x,y when mouse is pressed
                 clickPoint = e.getPoint();
+                //currentShape = new Rectangle(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, Color.black, false, Color.BLACK);
+            }
+
+
+            public void mouseReleased(MouseEvent e){
+                clickPoint = null;
             }
         });
 
-
-        addMouseListener(new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {
-                // save coord x,y when mouse is pressed
-                relasePoint = e.getPoint();
-                //gir mer mening at image er en privat medlemsvariabel?
-                drawFreeHand(image);
-                repaint();
-            }
-        });
 
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
-                Point dragPoint = e.getPoint();
-                int x = Math.min(clickPoint.x, dragPoint.x);
-                int y = Math.min(clickPoint.y, dragPoint.y);
+                relasePoint = e.getPoint();
+                //if (currentShape != null){
+                    //oppdaterer hele tiden currentshape
+                    //currentShape.update(clickPoint.x, clickPoint.y, dragPoint.x, dragPoint.y);
+                //}
                 repaint();
             }
         });
 
+
+
     }
 
-
-    protected void paintComponent(Graphics g) {
-        if (canvas == null) {
-            // create image
-            canvas = createImage(getSize().width, getSize().height);
-            graphics = (Graphics2D) canvas.getGraphics();
-            // enable antialiasing
-            // clear drawFreeHand area
-            //lag et blankt bilde
+    public void paint(Graphics g) {
+        super.paint(g);
+        if (clickPoint != null) {
+            g.setColor(Color.RED);
+            g.drawLine(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y);
         }
-
-        g.drawImage(canvas, 0, 0, null);
     }
+    
+
+
+
 
     public void drawFreeHand(Image image){
         //klarer man å bare skrive obj.draw her eller må man ta hensyn?
@@ -137,6 +140,14 @@ public class DrawManager extends JPanel {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setDrawTool(){
+        //her kan vi sette drawTool
+    }
+
+    public void setColor(){
+        //her kan vi oppdatere farge
     }
 
 }

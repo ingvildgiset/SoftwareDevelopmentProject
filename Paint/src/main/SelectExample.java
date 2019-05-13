@@ -95,7 +95,7 @@ public class SelectExample {
                 g2d.dispose();
                 g2d = (Graphics2D) g.create();
                 g2d.draw(selection);
-                g2d.dispose();
+                //g2d.dispose();
             }
         }
 

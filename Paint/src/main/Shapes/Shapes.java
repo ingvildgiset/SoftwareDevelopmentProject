@@ -30,6 +30,8 @@ public abstract class Shapes {
         return fill;
     }
 
+    public abstract void update(double x1, double y1, double x2, double y2);
+
 
     //alle må implementere disse to metodene.
     //Disse vil være forskjellig for alle objektene. Vi lager de derfor abstrakte
