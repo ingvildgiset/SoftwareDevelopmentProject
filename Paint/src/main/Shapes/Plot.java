@@ -30,6 +30,7 @@ public class Plot extends Shapes {
 
     @Override
     public void draw(Graphics g) {
+        g.setColor(getBoarderColor());
         g.fillOval((int) Math.round(x), (int) Math.round(y), 3, 3);
     }
 }

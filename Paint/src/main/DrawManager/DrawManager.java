@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,9 +16,12 @@ import Image.Image;
 import Shapes.Rectangle;
 import Shapes.*;
 
+import static IO.VecFileManaging.createVecFileFromImage;
+
 
 public class DrawManager extends JPanel {
     private java.awt.Image canvas;          //the actual graphic image that we are drawing on
+    private Image image;
 
     //settings
     private ShapeTool shapeTool;
@@ -29,16 +33,22 @@ public class DrawManager extends JPanel {
     private Point clickPoint;
     private Point releasePoint;
 
+    private Graphics2D graphics;
+
+
+    //
     private List<Shapes> myShapes;
     private Shapes currentShape;
 
 
     public DrawManager() {
 
-        this.shapeTool = ShapeTool.PLOT;
+        this.shapeTool = ShapeTool.POLYGON;
         myShapes = new ArrayList<Shapes>();
-        this.penColor = Color.black;
-        this.fill = true;
+        this.image = new Image(900, 900);
+
+        this.penColor = Color.BLACK;
+        this.fill = false;
         this.fillColor = Color.BLACK;
 
 
@@ -67,7 +77,8 @@ public class DrawManager extends JPanel {
             }
 
             public void mouseReleased(MouseEvent e){
-                myShapes.add(currentShape);
+                //myShapes.add(currentShape);
+                image.addShape(currentShape);
                 clickPoint = null;
                 currentShape = null;
                 repaint();
@@ -83,8 +94,6 @@ public class DrawManager extends JPanel {
             }
         });
 
-
-
     }
 
     public void paintComponent(Graphics g) {
@@ -92,18 +101,17 @@ public class DrawManager extends JPanel {
         setBackground(Color.WHITE);
         if (canvas == null) {
             canvas = createImage(getSize().width, getSize().height);
+            graphics = (Graphics2D) canvas.getGraphics();
         }
 
 
         if (clickPoint != null) {
             //set the colour
-            g.setColor(Color.RED);
-
             //draw the temp figure
             currentShape.draw(g);
         }
 
-        for (Shapes fig: myShapes){
+        for (Shapes fig: image.getShapes()){
             //draw all shapes that are added
             fig.draw(g);
         }
@@ -115,7 +123,7 @@ public class DrawManager extends JPanel {
     }
 
     public void setPenColor(Color color){
-        this.penColor = penColor;
+        this.penColor = color;
     }
 
     public void setFillColor(Color color){
@@ -123,19 +131,30 @@ public class DrawManager extends JPanel {
     }
 
     public void clearCanvas(){
+        System.out.println("Clear Canvas");
 
     }
 
 
 
-    public void drawFromVecFile(String filepath){
+    public void load(String filepath){
         try {
             Image newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
-            //newImage.drawAll(graphics);
-            //må vi ha denne som en privat variabel alikavel
-        } catch (FileNotFoundException e) {
+            this.image = newImage;
+            newImage.drawAll(graphics);
+            repaint();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void save(String filepath){
+        try{
+            createVecFileFromImage(filepath, image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

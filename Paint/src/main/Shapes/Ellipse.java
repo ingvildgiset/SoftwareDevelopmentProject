@@ -31,7 +31,7 @@ public class Ellipse extends Shapes{
     @Override
     public String toVecFormat() {
         String vec = colorToVecFormat();
-        vec = vec + "ELLIPSe" + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
+        vec = vec + "ELLIPSE " + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
         return vec;
     }
 
@@ -39,7 +39,12 @@ public class Ellipse extends Shapes{
     public void draw(Graphics graphics){
         int x = Math.min((int)Math.round(x1), (int) Math.round(x2));
         int y = Math.min((int)Math.round(y1), (int) Math.round(y2));
+        graphics.setColor(getBoarderColor());
         graphics.drawOval(x, y, (int) Math.round(width), (int) Math.round(height));
+        if(isFilled()){
+            graphics.setColor(getFillColor());
+            graphics.fillOval(x, y, (int) Math.round(width), (int) Math.round(height));
+        }
     }
 
 }

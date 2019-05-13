@@ -20,14 +20,6 @@ public class Image {
 
     }
 
-    public int getWidth(ImageObserver observer) {
-        return width;
-    }
-
-    public int getHeight(ImageObserver observer) {
-        return height;
-    }
-
     public void addShape(Shapes shape){
         System.out.println("add shape");
         shapes.add(shape);

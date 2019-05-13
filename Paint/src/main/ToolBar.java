@@ -3,15 +3,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import java.io.FileFilter;
+
 import DrawManager.*;
 import Shapes.Ellipse;
 
 
 public class ToolBar extends JPanel{
     private DrawManager drawManager;
-    private boolean penColorPushed;
-    private boolean fillColorPushed;
+    private File file;
+
 
 
     public ToolBar(DrawManager drawManager){
@@ -35,7 +38,6 @@ public class ToolBar extends JPanel{
         Icon poly = new ImageIcon(getClass().getResource("images/star.png"));
         JButton polygonButton = new JButton(poly);
 
-
         Icon undo = new ImageIcon(getClass().getResource("images/undo.png"));
         JButton undoButton = new JButton(undo);
 
@@ -50,9 +52,6 @@ public class ToolBar extends JPanel{
         JButton loadButton = new JButton("Load");
 
 
-        int saveCounter = 0;
-        File file;
-
         lineButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.LINE));
         ellipseButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.ELLIPSE));
         rectangleButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.RECTANGLE));
@@ -61,21 +60,46 @@ public class ToolBar extends JPanel{
         undoButton.addActionListener(e -> System.out.println("Remove last thing"));
         redoButton.addActionListener(e -> System.out.println("redo"));
 
+
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("clear");
+                drawManager.clearCanvas();
             }
         });
 
-       /* loadButton.addActionListener(new ActionListener() {
+        loadButton.addActionListener(new ActionListener() {
+             @Override
+
+             public void actionPerformed(ActionEvent e) {
+                 JFileChooser fileChooser = new JFileChooser();
+                 FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                         "VEC files", "vec");
+                 fileChooser.setFileFilter(filter);
+
+                 if (fileChooser.showOpenDialog(loadButton) == JFileChooser.APPROVE_OPTION) {
+                     String filePath = fileChooser.getSelectedFile().getPath();
+                     drawManager.load(filePath);
+                 }
+             }
+        });
+
+        saveAsButton.addActionListener(new ActionListener() {
             @Override
+
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
-                if (fileChooser.showOpenDialog(loadButton) == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                        "VEC files", "vec");
+                fileChooser.setFileFilter(filter);
+
+                if (fileChooser.showOpenDialog(saveAsButton) == JFileChooser.APPROVE_OPTION) {
+
+                    String filePath = fileChooser.getSelectedFile().getPath();
+                    drawManager.save(filePath);
                 }
-            }*/
+            }
+        });
 
         add(undoButton);
         add(redoButton);
