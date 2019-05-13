@@ -7,141 +7,136 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import Image.Image;
-import Shapes.*;
 import Shapes.Rectangle;
+import Shapes.*;
 
 
 public class DrawManager extends JPanel {
+    private java.awt.Image canvas;          //the actual graphic image that we are drawing on
 
-    //usikker på om vi trenger et image enda??
-    private java.awt.Image canvas;
-    private Graphics2D graphics;
-
-    //denne må oppdateres av toolBar
-    private static ShapeEnum shapeSelection;
-    private Color currentColor;
+    //settings
+    private ShapeTool shapeTool;
+    private Color penColor;
+    private Color fillColor;
+    private boolean fill;
 
     // Mouse coordinates
     private Point clickPoint;
-    private Point currentPoint;
+    private Point releasePoint;
 
-    private Image image;
-
+    private List<Shapes> myShapes;
+    private Shapes currentShape;
 
 
     public DrawManager() {
-        currentColor = Color.BLUE;
-        shapeSelection = ShapeEnum.LINE;        //dette er default verdien
 
-
-        image = new Image(100, 100);
-        System.out.println("vi har lagt et drawArea");
+        this.shapeTool = ShapeTool.PLOT;
+        myShapes = new ArrayList<Shapes>();
+        this.penColor = Color.black;
+        this.fill = true;
+        this.fillColor = Color.BLACK;
 
 
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                // save coord x,y when mouse is pressed
                 clickPoint = e.getPoint();
-                System.out.println("pressed");
+                switch (shapeTool){
+                    case PLOT:
+                        currentShape = new Plot(clickPoint.x, clickPoint.y, penColor);
+                        break;
+                    case LINE:
+                        currentShape = new Line(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor);
+                        break;
+                    case RECTANGLE:
+                        currentShape = new Rectangle(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor, fill, fillColor);
+                        break;
+                    case ELLIPSE:
+                        currentShape = new Ellipse(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor, fill, fillColor);
+                        break;
+                    case POLYGON:
+                        System.out.println("tegner polygon");
+                        break;
+                    default:
+                        System.out.println("Feil valg av shape");
+                }
+            }
 
-                //create an object
-                Plot newplot = new Plot(clickPoint.x, clickPoint.y, currentColor);
-                //add object to image
-                image.addShape(newplot);
-                //drawFreeHand on the screen
-                //kan man farge bare ett punkt?????
-
-                //graphics.drawLine(clickPoint.x, clickPoint.y, clickPoint.x+1, clickPoint.y);
+            public void mouseReleased(MouseEvent e){
+                myShapes.add(currentShape);
+                clickPoint = null;
+                currentShape = null;
                 repaint();
             }
         });
 
-
-        addMouseListener(new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {
-                // save coord x,y when mouse is pressed
-                currentPoint= e.getPoint();
-                System.out.println("sluppet");
-                drawFreeHand();
-                repaint();
-            }
-        });
 
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
-                Point dragPoint = e.getPoint();
-                int x = Math.min(clickPoint.x, dragPoint.x);
-                int y = Math.min(clickPoint.y, dragPoint.y);
+                releasePoint = e.getPoint();
+                currentShape.update(releasePoint.x, releasePoint.y);
                 repaint();
             }
         });
 
+
+
     }
 
-    public static void updateShape(ShapeEnum newShape) {
-        shapeSelection = newShape;
-    }
-
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        setBackground(Color.WHITE);
         if (canvas == null) {
-            // create image
             canvas = createImage(getSize().width, getSize().height);
-            graphics = (Graphics2D) canvas.getGraphics();
-            graphics.setColor(currentColor);
-            // enable antialiasing
-            // clear drawFreeHand area
-            //lag et blankt bilde
         }
 
-        g.drawImage(canvas, 0, 0, null);
-    }
 
-    public void drawFreeHand(){
-        //klarer man å bare skrive obj.draw her eller må man ta hensyn?
-        switch(shapeSelection){
-            case PLOT:
-                System.out.println("tegner plot");
-                Ellipse2D plot = new Ellipse2D.Double(clickPoint.x, clickPoint.y, 3, 3);
-                System.out.println(plot);
-                graphics.fill(plot);
-                break;
-            case LINE:
-                System.out.println("tegner linje");
-                graphics.drawLine(clickPoint.x, clickPoint.y, currentPoint.x, currentPoint.y);
-                repaint();
-                break;
-            case RECTANGLE:
-                //her må det oppdateres med fill og evt fill farge
-                Rectangle rectangle = new Rectangle(clickPoint.x, clickPoint.y, currentPoint.x, currentPoint.y, currentColor, false, currentColor);
-                rectangle.draw(graphics);
-                repaint();
-                break;
-            case ELLIPSE:
-                System.out.println("tegner ellipse");
-                int w = Math.abs(currentPoint.x - clickPoint.x);
-                int h = Math.abs(currentPoint.y - clickPoint.y);
-                graphics.draw(new Ellipse2D.Double(Math.min(clickPoint.x, currentPoint.x), Math.min(clickPoint.y, currentPoint.y), w, h));
-                break;
+        if (clickPoint != null) {
+            //set the colour
+            g.setColor(Color.RED);
 
-            case POLYGON:
-                //denne venter vi litt med.
-                System.out.println("tegner polygon");
-                break;
-            default:
-                System.out.println("Feil valg av shape");
+            //draw the temp figure
+            currentShape.draw(g);
         }
 
+        for (Shapes fig: myShapes){
+            //draw all shapes that are added
+            fig.draw(g);
+        }
     }
+
+
+    public void setShapeTool(ShapeTool shapeTool){
+        this.shapeTool = shapeTool;
+    }
+
+    public void setPenColor(Color color){
+        this.penColor = penColor;
+    }
+
+    public void setFillColor(Color color){
+        this.fillColor = color;
+    }
+
+    public void clearCanvas(){
+
+    }
+
+
 
     public void drawFromVecFile(String filepath){
         try {
             Image newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
-            newImage.drawAll(graphics);
+            //newImage.drawAll(graphics);
+            //må vi ha denne som en privat variabel alikavel
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
 
 }

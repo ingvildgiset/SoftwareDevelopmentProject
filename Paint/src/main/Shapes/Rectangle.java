@@ -13,8 +13,8 @@ public class Rectangle extends Shapes {
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-        this.height = Math.abs(x1 - x2);
-        this.width = Math.abs(y1 - y2);
+        this.height = Math.abs(y1 - y2);
+        this.width = Math.abs(x1 - x2);
     }
 
     @Override
@@ -25,8 +25,18 @@ public class Rectangle extends Shapes {
     }
 
     @Override
-    public void draw(Graphics2D graphics ) {
+    public void draw(Graphics graphics) {
         graphics.drawRect((int) Math.round(Math.min(x1, x2)), (int) Math.round(Math.min(y1, y2)),  (int) Math.round(width), (int) Math.round(height));
+    }
+
+    @Override
+    public void update(double x2, double y2){
+        this.x2 = x2;
+        this.y2 = y2;
+
+        this.height = Math.abs(y1 - y2);
+        this.width = Math.abs(x1 - x2);
+
     }
 
 

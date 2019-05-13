@@ -30,11 +30,13 @@ public abstract class Shapes {
         return fill;
     }
 
+    public abstract void update(double x2, double y2);
+
 
     //alle må implementere disse to metodene.
     //Disse vil være forskjellig for alle objektene. Vi lager de derfor abstrakte
     public abstract String toVecFormat();
-    public abstract void draw(Graphics2D g);
+    public abstract void draw(Graphics g);
 
     public String colorToVecFormat() {
         String vec = "";

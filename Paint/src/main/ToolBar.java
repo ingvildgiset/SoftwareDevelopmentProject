@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import java.io.File;
-import DrawManager.ShapeEnum;
-import DrawManager.DrawManager;
 
 
 public class ToolBar extends JPanel{
@@ -29,6 +27,7 @@ public class ToolBar extends JPanel{
 
         Icon poly = new ImageIcon(getClass().getResource("images/star.png"));
         JButton polygonButton = new JButton(poly);
+
 
         Icon undo = new ImageIcon(getClass().getResource("images/undo.png"));
         JButton undoButton = new JButton(undo);
@@ -83,7 +82,5 @@ public class ToolBar extends JPanel{
         add(saveAsButton);
         add(loadButton);
     }
-
-
 
 }

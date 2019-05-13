@@ -39,6 +39,7 @@ public class Image {
 
 
     public void drawAll(Graphics2D graphics){
+        System.out.println("tegner alle");
         for (Shapes shapeObj: shapes) {
             shapeObj.draw(graphics);
         }

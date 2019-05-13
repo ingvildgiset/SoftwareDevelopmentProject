@@ -1,6 +1,6 @@
 package DrawManager;
 
 
-public enum ShapeEnum {
+public enum ShapeTool {
     PLOT, LINE, RECTANGLE, ELLIPSE, POLYGON
 }
