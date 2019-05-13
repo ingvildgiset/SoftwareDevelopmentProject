@@ -13,7 +13,8 @@ public class ToolBar extends JPanel{
         JRadioButton ellipseButton = new JRadioButton("Ellipse");
         JRadioButton rectangleButton = new JRadioButton("Rectangle");
         JRadioButton plotButton = new JRadioButton("Plot");
-        JRadioButton polyButton = new JRadioButton("Polymorphism");
+        JRadioButton polygonButton = new JRadioButton("Polygon");
+
         JButton undoButton = new JButton("Undo");
 
         //Må legge til at bare en checkbox kan velges.....
@@ -23,13 +24,13 @@ public class ToolBar extends JPanel{
         myButtonGroup.add(ellipseButton);
         myButtonGroup.add(rectangleButton);
         myButtonGroup.add(plotButton);
-        myButtonGroup.add(polyButton);
+        myButtonGroup.add(polygonButton);
 
         lineButton.addActionListener(e -> System.out.println("linje"));
         ellipseButton.addActionListener(e -> System.out.println("ellipse"));
         rectangleButton.addActionListener(e -> System.out.println("rectangle"));
         plotButton.addActionListener(e -> System.out.println("plot"));
-        polyButton.addActionListener(e -> System.out.println("poly"));
+        polygonButton.addActionListener(e -> System.out.println("poly"));
         undoButton.addActionListener(e -> System.out.println("undo"));
 
 
@@ -37,7 +38,7 @@ public class ToolBar extends JPanel{
         add(lineButton, BorderLayout.CENTER);
         add(ellipseButton, BorderLayout.CENTER);
         add(rectangleButton, BorderLayout.CENTER);
-        add(polyButton, BorderLayout.CENTER);
+        add(polygonButton, BorderLayout.CENTER);
         add(plotButton, BorderLayout.CENTER);
 
     }
