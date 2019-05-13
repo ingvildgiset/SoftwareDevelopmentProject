@@ -20,7 +20,7 @@ public class Line extends Shapes {
     }
 
     @Override
-    public void update(double x1, double y1, double x2, double y2) {
+    public void update(double x2, double y2) {
 
     }
 
@@ -32,7 +32,7 @@ public class Line extends Shapes {
     }
 
     @Override
-    public void draw(Graphics2D graphics ) {
+    public void draw(Graphics graphics ) {
         graphics.drawLine((int) Math.round(x1), (int) Math.round(y1), (int) Math.round(x2), (int) Math.round(y2));
     }
 

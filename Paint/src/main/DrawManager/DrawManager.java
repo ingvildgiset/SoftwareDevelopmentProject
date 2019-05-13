@@ -7,7 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import Image.Image;
 import Shapes.Rectangle;
@@ -16,52 +18,71 @@ import Shapes.*;
 
 public class DrawManager extends JPanel {
     private java.awt.Image canvas;          //the actual graphic image that we are drawing on
-    private Graphics2D graphics;
 
+    //settings
     private ShapeTool shapeTool;
-
-    private Image image;
-
+    private Color penColor;
+    private Color fillColor;
+    private boolean fill;
 
     // Mouse coordinates
     private Point clickPoint;
-    private Point relasePoint;
-    private Point dragPoint;
+    private Point releasePoint;
 
+    private List<Shapes> myShapes;
     private Shapes currentShape;
+
 
 
 
 
     public DrawManager() {
         this.shapeTool = ShapeTool.RECTANGLE;
-        this.currentShape = null;
+        myShapes = new ArrayList<Shapes>();
+        this.penColor = Color.black;
+        this.fill = true;
+        this.fillColor = Color.BLACK;
 
-
-        //dette er konstruktøren, så vet ikke om det blir helt riktig.
-        Image image = new Image(100, 100);
 
 
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 clickPoint = e.getPoint();
-                //currentShape = new Rectangle(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, Color.black, false, Color.BLACK);
+                switch (shapeTool){
+                    case PLOT:
+                        currentShape = new Plot(clickPoint.x, clickPoint.y, penColor);
+                        break;
+                    case LINE:
+                        currentShape = new Line(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor);
+                        break;
+                    case RECTANGLE:
+                        currentShape = new Rectangle(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor, fill, fillColor);
+                        break;
+                    case ELLIPSE:
+                        currentShape = new Ellipse(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor, fill, fillColor);
+                        break;
+                    case POLYGON:
+                        System.out.println("tegner polygon");
+                        break;
+                    default:
+                        System.out.println("Feil valg av shape");
+                }
             }
 
-
             public void mouseReleased(MouseEvent e){
+                Rectangle test = new Rectangle(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black, false, Color.BLACK);
+                myShapes.add(test);
                 clickPoint = null;
+                currentShape = null;
+                repaint();
             }
         });
 
 
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
-                relasePoint = e.getPoint();
-                //if (currentShape != null){
-                    //oppdaterer hele tiden currentshape
-                    //currentShape.update(clickPoint.x, clickPoint.y, dragPoint.x, dragPoint.y);
-                //}
+                releasePoint = e.getPoint();
+                currentShape.update(releasePoint.x, releasePoint.y);
                 repaint();
             }
         });
@@ -70,14 +91,29 @@ public class DrawManager extends JPanel {
 
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        setBackground(Color.WHITE);
+        if (canvas == null) {
+            canvas = createImage(getSize().width, getSize().height);
+        }
+
+
         if (clickPoint != null) {
+            //set the colour
             g.setColor(Color.RED);
-            g.drawLine(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y);
+
+            //draw the temp figure
+            currentShape.draw(g);
+            //g.drawRect(clickPoint.x, clickPoint.y, releasePoint.x - clickPoint.x, releasePoint.y - clickPoint.y);
+        }
+
+        for (Shapes fig: myShapes){
+            //draw all shapes that are added
+            fig.draw(g);
         }
     }
-    
+
 
 
 
@@ -92,36 +128,26 @@ public class DrawManager extends JPanel {
 
                 //draw on Canvas
                 Ellipse2D plot = new Ellipse2D.Double(clickPoint.x, clickPoint.y, 3, 3);
-                graphics.fill(plot);
+
                 break;
             case LINE:
                 //add figure to image
-                Line newLLine = new Line(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black);
+                Line newLLine = new Line(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black);
                 image.addShape(newLLine);
 
-                //draw on Canvas
-                graphics.drawLine(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y);
-                repaint();
+
                 break;
             case RECTANGLE:
                 //add figure to image
-                Rectangle newRec = new Rectangle(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black, false, Color.BLACK);
+                Rectangle newRec = new Rectangle(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black, false, Color.BLACK);
                 image.addShape(newRec);
 
-                //draw on Canvas
-                Rectangle rectangle = new Rectangle(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black, false, Color.BLACK);
-                rectangle.draw(graphics);
-                repaint();
+
                 break;
             case ELLIPSE:
                 //add figure to image
-                Ellipse newEllipse = new Ellipse(clickPoint.x, clickPoint.y, relasePoint.x, relasePoint.y, Color.black, false, Color.BLACK);
+                Ellipse newEllipse = new Ellipse(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black, false, Color.BLACK);
                 image.addShape(newEllipse);
-
-                //draw on Canvas
-                int w = Math.abs(relasePoint.x - clickPoint.x);
-                int h = Math.abs(relasePoint.y - clickPoint.y);
-                graphics.draw(new Ellipse2D.Double(Math.min(clickPoint.x, relasePoint.x), Math.min(clickPoint.y, relasePoint.y), w, h));
                 break;
             case POLYGON:
                 //denne venter vi litt med.
@@ -136,14 +162,15 @@ public class DrawManager extends JPanel {
     public void drawFromVecFile(String filepath){
         try {
             Image newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
-            newImage.drawAll(graphics);
+            //newImage.drawAll(graphics);
+            //må vi ha denne som en privat variabel alikavel
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public void setDrawTool(){
-        //her kan vi sette drawTool
+    public void setShapeTool(ShapeTool shapeTool){
+        shapeTool = shapeTool;
     }
 
     public void setColor(){

@@ -20,7 +20,7 @@ public class Ellipse extends Shapes{
 
 
     @Override
-    public void update(double x1, double y1, double x2, double y2) {
+    public void update(double x2, double y2) {
 
     }
 
@@ -32,8 +32,8 @@ public class Ellipse extends Shapes{
     }
 
 
-    public void draw(Graphics2D graphics){
-        graphics.draw(new Ellipse2D.Double(Math.min(x1, x2), Math.min(y1, y2), width, height));
+    public void draw(Graphics graphics){
+        //graphics.draw(new Ellipse2D.Double(Math.min(x1, x2), Math.min(y1, y2), width, height));
     }
 
 }

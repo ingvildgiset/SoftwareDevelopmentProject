@@ -14,7 +14,7 @@ public class Plot extends Shapes {
     }
 
     @Override
-    public void update(double x1, double y1, double x2, double y2) {
+    public void update(double x2, double y2) {
 
     }
 
@@ -26,7 +26,7 @@ public class Plot extends Shapes {
     }
 
     @Override
-    public void draw(Graphics2D g) {
+    public void draw(Graphics g) {
         //her må vi gjøre noe greier
     }
 }
