@@ -4,12 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import java.io.File;
+import DrawManager.*;
+import Shapes.Ellipse;
 
 
 public class ToolBar extends JPanel{
+    private DrawManager drawManager;
 
 
-    public ToolBar(){
+    public ToolBar(DrawManager drawManager){
+        this.drawManager = drawManager;
+
         setLayout(new FlowLayout());
         //setLayout(new FlowLayout(FlowLayout.LEFT, 1,1));
         setBackground(Color.lightGray);
@@ -45,11 +50,11 @@ public class ToolBar extends JPanel{
         int saveCounter = 0;
         File file;
 
-        lineButton.addActionListener(e -> System.out.println("update shape"));
-        ellipseButton.addActionListener(e -> System.out.println("update"));
-        rectangleButton.addActionListener(e -> System.out.println("update"));
-        plotButton.addActionListener(e -> System.out.println("update"));
-        polygonButton.addActionListener(e -> System.out.println("update shape"));
+        lineButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.LINE));
+        ellipseButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.ELLIPSE));
+        rectangleButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.RECTANGLE));
+        plotButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.PLOT));
+        polygonButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.POLYGON));
         undoButton.addActionListener(e -> System.out.println("Remove last thing"));
         redoButton.addActionListener(e -> System.out.println("redo"));
 

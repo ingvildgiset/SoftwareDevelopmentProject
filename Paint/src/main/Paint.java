@@ -29,8 +29,8 @@ public class Paint {
 
         //create all panels
         DrawManager drawManager = new DrawManager();
-        ToolBar shapeMenu = new ToolBar();
-        ColorBar colorMenu = new ColorBar();
+        ToolBar shapeMenu = new ToolBar(drawManager);
+        ColorBar colorMenu = new ColorBar(drawManager);
         //another panel to file
 
         colorMenu.setPreferredSize(new Dimension(50, 100));

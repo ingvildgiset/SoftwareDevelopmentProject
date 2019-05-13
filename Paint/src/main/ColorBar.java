@@ -1,11 +1,15 @@
+import DrawManager.DrawManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ColorBar extends JPanel {
+    private DrawManager drawManager;
 
-    public ColorBar() {
+    public ColorBar(DrawManager drawManager) {
+        this.drawManager = drawManager;
         setLayout(new GridLayout(13,1));
         setBackground(Color.lightGray);
 
