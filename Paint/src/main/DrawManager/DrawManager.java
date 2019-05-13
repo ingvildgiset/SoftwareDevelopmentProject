@@ -33,7 +33,8 @@ public class DrawManager extends JPanel {
 
     public DrawManager() {
         currentColor = Color.BLUE;
-        shapeSelection = ShapeEnum.PLOT;        //dette er default verdien
+        shapeSelection = ShapeEnum.LINE;        //dette er default verdien
+
 
         image = new Image(100, 100);
         System.out.println("vi har lagt et drawArea");

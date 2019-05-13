@@ -33,11 +33,12 @@ public class Paint {
         ColorBar colorMenu = new ColorBar();
         //another panel to file
 
+        colorMenu.setPreferredSize(new Dimension(50, 100));
+
         container.add(drawManager, BorderLayout.CENTER);
         container.add(shapeMenu, BorderLayout.NORTH);
         container.add(colorMenu, BorderLayout.WEST);
 
-        colorMenu.setPreferredSize(new Dimension(200,300));
 
         //set features for frame
         frame.setSize(900, 900);

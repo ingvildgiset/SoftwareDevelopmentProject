@@ -1,8 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,46 +6,43 @@ import java.awt.event.ActionListener;
 public class ColorBar extends JPanel {
 
     public ColorBar() {
+        setLayout(new GridLayout(13,1));
+        setBackground(Color.lightGray);
 
-        setLayout(new GridLayout(5, 2, 2, 2));
-        JButton yellowButton = new JButton("Yellow");
+        JButton yellowButton = new JButton();
         yellowButton.setBackground(Color.YELLOW);
 
-        JButton greenButton = new JButton("green");
+        JButton greenButton = new JButton();
         greenButton.setBackground(Color.GREEN);
 
-        JButton blueButton = new JButton("blue");
+        JButton blueButton = new JButton();
         blueButton.setBackground(Color.BLUE);
         blueButton.setForeground(Color.WHITE);
-        blueButton.setOpaque(true); //setter knappen gjennomsiktig
-        blueButton.setBorderPainted(false);
 
-        JButton redButton = new JButton("red");
+        JButton redButton = new JButton();
         redButton.setBackground(Color.RED);
-        redButton.setOpaque(true);
-        redButton.setBorderPainted(false);
 
-        JButton blackButton = new JButton("black");
+        JButton blackButton = new JButton();
         blackButton.setBackground(Color.BLACK);
-        blackButton.setPreferredSize(new Dimension(40, 40));
         blackButton.setForeground(Color.WHITE);
 
-        JButton magentaButton = new JButton("magenta");
+        JButton magentaButton = new JButton();
         magentaButton.setBackground(Color.MAGENTA);
-        magentaButton.setOpaque(true);
-        magentaButton.setBorderPainted(false);
 
-        JButton whiteButton = new JButton("white");
+        JButton whiteButton = new JButton();
         whiteButton.setBackground(Color.WHITE);
-        whiteButton.setOpaque(true);
-        whiteButton.setBorderPainted(false);
+
+        JButton pinkButton = new JButton();
+        pinkButton.setBackground(Color.PINK);
+
+        JButton cyanButton = new JButton();
+        cyanButton.setBackground(Color.CYAN);
 
 
 // Button for color chooser
-        JButton colorButton = new JButton("Choose color");
-        colorButton.setBackground(Color.lightGray);
-        colorButton.setOpaque(true);
-        colorButton.setBorderPainted(false);
+        Icon colorwheel = new ImageIcon(getClass().getResource("images/wheel.png"));
+        JButton colorButton = new JButton(colorwheel);
+        colorButton.setBackground(Color.WHITE);
         colorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,32 +50,16 @@ public class ColorBar extends JPanel {
                 Color newColor = JColorChooser.showDialog(null, "Choose a different color", Color.BLACK);
                 // Over her, skal null være this??
                 // Asigns the chosen color to colorButton
-                colorButton.setBackground(newColor);
             }
         });
 
 
         // The selected color buttons
-        JButton firstColorButton = new JButton("Color 1");
+        JButton firstColorButton = new JButton("1.");
         firstColorButton.setBackground(null);
-        firstColorButton.setOpaque(true);
-        firstColorButton.setBorderPainted(false);
 
-        firstColorButton.setLayout(new BorderLayout());
-        JLabel label1 = new JLabel("Outline color");
-        Font font = new Font(null, Font.BOLD, 12);
-        label1.setFont(font);
-        firstColorButton.add(BorderLayout.NORTH, label1);
-
-
-        JButton secondColorButton = new JButton();
+        JButton secondColorButton = new JButton("2.");
         secondColorButton.setBackground(null);
-        secondColorButton.setOpaque(true);
-        secondColorButton.setBorderPainted(false);
-        secondColorButton.setLayout(new BorderLayout());
-        JLabel label2 = new JLabel("Filling color");
-        label2.setFont(font);
-        secondColorButton.add(BorderLayout.NORTH, label2);
 
 
         //ActionListeners for buttons
@@ -107,6 +84,8 @@ public class ColorBar extends JPanel {
         whiteButton.addActionListener(e -> firstColorButton.setBackground(Color.WHITE));
 
 // Adding color buttons to panel
+        add(firstColorButton);
+        add(secondColorButton);
         add(blackButton);
         add(yellowButton);
         add(whiteButton);
@@ -114,10 +93,9 @@ public class ColorBar extends JPanel {
         add(greenButton);
         add(redButton);
         add(magentaButton);
+        add(pinkButton);
+        add(cyanButton);
         add(colorButton);
-        add(firstColorButton);
-        add(secondColorButton);
-
     }
 
 }
