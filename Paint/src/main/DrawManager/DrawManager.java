@@ -43,7 +43,7 @@ public class DrawManager extends JPanel {
 
     public DrawManager() {
 
-        this.shapeTool = ShapeTool.POLYGON;
+        this.shapeTool = ShapeTool.LINE;
         myShapes = new ArrayList<Shapes>();
         this.image = new Image(900, 900);
 
@@ -128,6 +128,11 @@ public class DrawManager extends JPanel {
 
     public void setFillColor(Color color){
         this.fillColor = color;
+        this.fill = true;
+    }
+
+    public void fillOff(){
+        this.fill = false;
     }
 
     public void clearCanvas(){

@@ -223,9 +223,10 @@ public class ColorBar extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (fillColor.isSelected()){
-                    drawManager.setFillColor(Color.YELLOW);
+                    drawManager.fillOff();
                     fillColor.setBackground(null);
                     fillColor.setForeground(Color.BLACK);
+
                 }
             }
         });
