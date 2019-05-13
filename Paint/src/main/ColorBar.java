@@ -77,8 +77,13 @@ public class ColorBar extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("color chooser skal komme her");
                 Color newColor = JColorChooser.showDialog(null, "Choose a different color", Color.BLACK);
-                // Over her, skal null være this??
-                // Asigns the chosen color to colorButton
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(newColor);
+                    penColor.setBackground(newColor);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(newColor);
+                    fillColor.setBackground(newColor);
+                }
             }
         });
 
@@ -226,15 +231,12 @@ public class ColorBar extends JPanel {
                     drawManager.fillOff();
                     fillColor.setBackground(null);
                     fillColor.setForeground(Color.BLACK);
-
                 }
             }
         });
 
 // Adding color buttons to panel
-
-
-                add(penColor);
+        add(penColor);
       //  add(penColorButton);
         add(fillColor);
       //  add(fillColorButton);
