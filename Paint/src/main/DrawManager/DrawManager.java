@@ -47,8 +47,8 @@ public class DrawManager extends JPanel {
         myShapes = new ArrayList<Shapes>();
         this.image = new Image(900, 900);
 
-        this.penColor = Color.black;
-        this.fill = true;
+        this.penColor = Color.BLACK;
+        this.fill = false;
         this.fillColor = Color.BLACK;
 
 
@@ -107,8 +107,6 @@ public class DrawManager extends JPanel {
 
         if (clickPoint != null) {
             //set the colour
-            g.setColor(Color.RED);
-
             //draw the temp figure
             currentShape.draw(g);
         }
@@ -125,7 +123,7 @@ public class DrawManager extends JPanel {
     }
 
     public void setPenColor(Color color){
-        this.penColor = penColor;
+        this.penColor = color;
     }
 
     public void setFillColor(Color color){

@@ -26,7 +26,12 @@ public class Rectangle extends Shapes {
 
     @Override
     public void draw(Graphics graphics) {
+        graphics.setColor(getBoarderColor());
         graphics.drawRect((int) Math.round(Math.min(x1, x2)), (int) Math.round(Math.min(y1, y2)),  (int) Math.round(width), (int) Math.round(height));
+        if (isFilled()){
+            graphics.setColor(getFillColor());
+            graphics.fillRect((int) Math.round(Math.min(x1, x2)), (int) Math.round(Math.min(y1, y2)),  (int) Math.round(width), (int) Math.round(height));
+        }
     }
 
     @Override
