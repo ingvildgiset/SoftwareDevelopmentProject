@@ -31,7 +31,7 @@ public class Ellipse extends Shapes{
     @Override
     public String toVecFormat() {
         String vec = colorToVecFormat();
-        vec = vec + "ELLIPSe" + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
+        vec = vec + "ELLIPSE " + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
         return vec;
     }
 

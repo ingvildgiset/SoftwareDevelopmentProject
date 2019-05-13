@@ -26,7 +26,7 @@ public abstract class VecFileManaging {
         boolean fill = false;
 
         //her må vi kanskje legge til en config-fil eller noe som gjør at man kan legge til en annen filsti
-        File file = new File("/Users/juliehaga/Desktop/SoftwareDevelopmentProject/Paint/src/Data/" + fileName);
+        File file = new File(fileName);
         Scanner sc = new Scanner(file);
 
         while (sc.hasNextLine()) {
@@ -70,9 +70,8 @@ public abstract class VecFileManaging {
     }
 
     public static void createVecFileFromImage(String filename, Image image) throws IOException {
-        FileWriter fw = new FileWriter("/Users/juliehaga/Desktop/SoftwareDevelopmentProject/Paint/src/Data/" + filename);
-        List<Shapes> shapes = new ArrayList<Shapes>();
-        shapes = image.getShapes();
+        FileWriter fw = new FileWriter(filename + ".vec");
+        List<Shapes> shapes = image.getShapes();
 
         for(Shapes shapeObj: shapes){
             //iterer gjennom alle objekter i bildet.
