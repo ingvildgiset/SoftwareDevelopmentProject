@@ -13,16 +13,10 @@ public class ColorBar extends JPanel {
 
         setLayout(new GridLayout(5,2,2, 2));
         JButton yellowButton = new JButton("Yellow");
-  //      yellowButton.setBorder(BorderFactory.createLineBorder(Color.darkGray));
         yellowButton.setBackground(Color.YELLOW);
-        yellowButton.setContentAreaFilled(false);
-        yellowButton.setOpaque(true);
-        yellowButton.setBorderPainted(false);
 
         JButton greenButton = new JButton("green");
         greenButton.setBackground(Color.GREEN);
-        greenButton.setOpaque(true); //setter knappen gjennomsiktig
-        greenButton.setBorderPainted(false);
 
         JButton blueButton = new JButton("blue");
         blueButton.setBackground(Color.BLUE);
@@ -37,9 +31,8 @@ public class ColorBar extends JPanel {
 
         JButton blackButton = new JButton("black");
         blackButton.setBackground(Color.BLACK);
+        blackButton.setPreferredSize(new Dimension(40, 40));
         blackButton.setForeground(Color.WHITE);
-        blackButton.setOpaque(true);
-        blackButton.setBorderPainted(false);
 
         JButton magentaButton = new JButton("magenta");
         magentaButton.setBackground(Color.MAGENTA);
