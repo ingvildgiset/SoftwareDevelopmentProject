@@ -11,7 +11,7 @@ public class ColorBar extends JPanel {
 
     public ColorBar() {
 
-        setLayout(new GridLayout(5,2,2, 2));
+        setLayout(new GridLayout(5, 2, 2, 2));
         JButton yellowButton = new JButton("Yellow");
         yellowButton.setBackground(Color.YELLOW);
 
@@ -45,7 +45,6 @@ public class ColorBar extends JPanel {
         whiteButton.setBorderPainted(false);
 
 
-
 // Button for color chooser
         JButton colorButton = new JButton("Choose color");
         colorButton.setBackground(Color.lightGray);
@@ -55,10 +54,10 @@ public class ColorBar extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("color chooser skal komme her");
-                 Color newColor = JColorChooser.showDialog(null, "Choose a different color", Color.BLACK);
-                 // Over her, skal null være this??
-                 // Asigns the chosen color to colorButton
-                 colorButton.setBackground(newColor);
+                Color newColor = JColorChooser.showDialog(null, "Choose a different color", Color.BLACK);
+                // Over her, skal null være this??
+                // Asigns the chosen color to colorButton
+                colorButton.setBackground(newColor);
             }
         });
 
@@ -71,9 +70,9 @@ public class ColorBar extends JPanel {
 
         firstColorButton.setLayout(new BorderLayout());
         JLabel label1 = new JLabel("Outline color");
-        Font font = new Font(null, Font.BOLD,12);
+        Font font = new Font(null, Font.BOLD, 12);
         label1.setFont(font);
-        firstColorButton.add(BorderLayout.NORTH,label1);
+        firstColorButton.add(BorderLayout.NORTH, label1);
 
 
         JButton secondColorButton = new JButton();
@@ -83,8 +82,7 @@ public class ColorBar extends JPanel {
         secondColorButton.setLayout(new BorderLayout());
         JLabel label2 = new JLabel("Filling color");
         label2.setFont(font);
-        secondColorButton.add(BorderLayout.NORTH,label2);
-
+        secondColorButton.add(BorderLayout.NORTH, label2);
 
 
         //ActionListeners for buttons
@@ -120,36 +118,7 @@ public class ColorBar extends JPanel {
         add(firstColorButton);
         add(secondColorButton);
 
-
-
-
-        // Trengs egentlig dette??
-// Lager fargepalett
-        JColorChooser colorChooser = new JColorChooser(Color.lightGray); //default color
-        colorChooser.setBorder(null);
-        colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                // metode for å endre fargen valgt
-               // colorChanged(colorButton, colorChooser);
-            }
-        });
     }
-    // Trengs dette?
-    //changes background of color chooser button to the one selected
-    protected void colorChanged(JButton colorButton, JColorChooser colorChooser){
-        colorButton.setBackground(colorChooser.getSelectionModel().getSelectedColor());
-    }
-
-/*
-    protected void paintComponent(Graphics g, JButton blueButton){
-        Graphics2D g2d = (Graphics2D) g;
-        g.setColor(Color.BLUE());
-        g2d.fillRect(0,0, getWidth(), getHeight());
-
-    }
-    */
-
 
 }
 

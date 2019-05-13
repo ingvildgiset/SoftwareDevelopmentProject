@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import DrawManager.ShapeEnum;
+import DrawManager.DrawManager;
+
 
 public class ToolBar extends JPanel{
-
 
     public ToolBar(){
         setLayout(new FlowLayout(FlowLayout.CENTER,3,3));
@@ -11,7 +13,7 @@ public class ToolBar extends JPanel{
         JRadioButton ellipseButton = new JRadioButton("Ellipse");
         JRadioButton rectangleButton = new JRadioButton("Rectangle");
         JRadioButton plotButton = new JRadioButton("Plot");
-        JRadioButton polyButton = new JRadioButton("Polymorphism");
+        JRadioButton polygonButton = new JRadioButton("Polygon");
         JButton undoButton = new JButton("Undo");
 
 
@@ -20,13 +22,13 @@ public class ToolBar extends JPanel{
         myButtonGroup.add(ellipseButton);
         myButtonGroup.add(rectangleButton);
         myButtonGroup.add(plotButton);
-        myButtonGroup.add(polyButton);
+        myButtonGroup.add(polygonButton);
 
         lineButton.addActionListener(e -> System.out.println("update shape"));
         ellipseButton.addActionListener(e -> System.out.println("update"));
         rectangleButton.addActionListener(e -> System.out.println("update"));
         plotButton.addActionListener(e -> System.out.println("update"));
-        polyButton.addActionListener(e -> System.out.println("update shape"));
+        polygonButton.addActionListener(e -> System.out.println("update shape"));
         undoButton.addActionListener(e -> System.out.println("Remove last thing"));
 
 
@@ -34,10 +36,11 @@ public class ToolBar extends JPanel{
         add(lineButton, BorderLayout.CENTER);
         add(ellipseButton, BorderLayout.CENTER);
         add(rectangleButton, BorderLayout.CENTER);
-        add(polyButton, BorderLayout.CENTER);
+        add(polygonButton, BorderLayout.CENTER);
         add(plotButton, BorderLayout.CENTER);
 
-
     }
+
+
 
 }
