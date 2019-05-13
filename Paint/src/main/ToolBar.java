@@ -47,6 +47,14 @@ public class ToolBar extends JPanel{
         JButton clearButton = new JButton("Clear All");
         JButton loadButton = new JButton("Load");
 
+        JRadioButton penColor = new JRadioButton("Pen color");
+        JRadioButton fillColor = new JRadioButton("Fill color");
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(penColor);
+        group.add(fillColor);
+
+
         int saveCounter = 0;
         File file;
 
@@ -75,6 +83,8 @@ public class ToolBar extends JPanel{
             }*/
 
 
+        add(penColor);
+        add(fillColor);
         add(undoButton);
         add(redoButton);
         add(saveButton);
