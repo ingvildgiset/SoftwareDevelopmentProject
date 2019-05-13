@@ -33,16 +33,12 @@ public class DrawManager extends JPanel {
     private Shapes currentShape;
 
 
-
-
-
     public DrawManager() {
-        this.shapeTool = ShapeTool.RECTANGLE;
+        this.shapeTool = ShapeTool.PLOT;
         myShapes = new ArrayList<Shapes>();
         this.penColor = Color.black;
         this.fill = true;
         this.fillColor = Color.BLACK;
-
 
 
         addMouseListener(new MouseAdapter() {
@@ -70,8 +66,7 @@ public class DrawManager extends JPanel {
             }
 
             public void mouseReleased(MouseEvent e){
-                Rectangle test = new Rectangle(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black, false, Color.BLACK);
-                myShapes.add(test);
+                myShapes.add(currentShape);
                 clickPoint = null;
                 currentShape = null;
                 repaint();
@@ -105,7 +100,6 @@ public class DrawManager extends JPanel {
 
             //draw the temp figure
             currentShape.draw(g);
-            //g.drawRect(clickPoint.x, clickPoint.y, releasePoint.x - clickPoint.x, releasePoint.y - clickPoint.y);
         }
 
         for (Shapes fig: myShapes){
@@ -115,49 +109,23 @@ public class DrawManager extends JPanel {
     }
 
 
+    public void setShapeTool(ShapeTool shapeTool){
+        this.shapeTool = shapeTool;
+    }
 
+    public void setPenColor(Color color){
+        this.penColor = penColor;
+    }
 
+    public void setFillColor(Color color){
+        this.fillColor = color;
+    }
 
-    public void drawFreeHand(Image image){
-        //klarer man å bare skrive obj.draw her eller må man ta hensyn?
-        switch(shapeTool){
-            case PLOT:
-                //add figure to image
-                Plot newPlot = new Plot(clickPoint.x, clickPoint.y, Color.BLACK);
-                image.addShape(newPlot);
-
-                //draw on Canvas
-                Ellipse2D plot = new Ellipse2D.Double(clickPoint.x, clickPoint.y, 3, 3);
-
-                break;
-            case LINE:
-                //add figure to image
-                Line newLLine = new Line(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black);
-                image.addShape(newLLine);
-
-
-                break;
-            case RECTANGLE:
-                //add figure to image
-                Rectangle newRec = new Rectangle(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black, false, Color.BLACK);
-                image.addShape(newRec);
-
-
-                break;
-            case ELLIPSE:
-                //add figure to image
-                Ellipse newEllipse = new Ellipse(clickPoint.x, clickPoint.y, releasePoint.x, releasePoint.y, Color.black, false, Color.BLACK);
-                image.addShape(newEllipse);
-                break;
-            case POLYGON:
-                //denne venter vi litt med.
-                System.out.println("tegner polygon");
-                break;
-            default:
-                System.out.println("Feil valg av shape");
-        }
+    public void clearCanvas(){
 
     }
+
+
 
     public void drawFromVecFile(String filepath){
         try {
@@ -169,12 +137,5 @@ public class DrawManager extends JPanel {
         }
     }
 
-    public void setShapeTool(ShapeTool shapeTool){
-        shapeTool = shapeTool;
-    }
-
-    public void setColor(){
-        //her kan vi oppdatere farge
-    }
 
 }

@@ -1,6 +1,7 @@
 package Shapes;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 public class Plot extends Shapes {
     private double x;
@@ -15,6 +16,8 @@ public class Plot extends Shapes {
 
     @Override
     public void update(double x2, double y2) {
+        this.x = x2;
+        this.y = y2;
 
     }
 
@@ -27,6 +30,6 @@ public class Plot extends Shapes {
 
     @Override
     public void draw(Graphics g) {
-        //her må vi gjøre noe greier
+        g.fillOval((int) Math.round(x), (int) Math.round(y), 3, 3);
     }
 }

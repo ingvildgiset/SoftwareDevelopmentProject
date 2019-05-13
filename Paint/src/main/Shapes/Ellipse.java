@@ -21,7 +21,11 @@ public class Ellipse extends Shapes{
 
     @Override
     public void update(double x2, double y2) {
+        this.x2 = x2;
+        this.y2 = y2;
 
+        this.height = Math.abs(y1 - y2);
+        this.width = Math.abs(x1 - x2);
     }
 
     @Override
@@ -33,7 +37,9 @@ public class Ellipse extends Shapes{
 
 
     public void draw(Graphics graphics){
-        //graphics.draw(new Ellipse2D.Double(Math.min(x1, x2), Math.min(y1, y2), width, height));
+        int x = Math.min((int)Math.round(x1), (int) Math.round(x2));
+        int y = Math.min((int)Math.round(y1), (int) Math.round(y2));
+        graphics.drawOval(x, y, (int) Math.round(width), (int) Math.round(height));
     }
 
 }

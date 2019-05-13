@@ -21,7 +21,8 @@ public class Line extends Shapes {
 
     @Override
     public void update(double x2, double y2) {
-
+        this.x2 = x2;
+        this.y2 = y2;
     }
 
     @Override
