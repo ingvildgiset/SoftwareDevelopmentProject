@@ -35,7 +35,7 @@ public class DrawManager extends JPanel {
 
     public DrawManager() {
 
-        this.shapeTool = ShapeTool.PLOT;
+        this.shapeTool = ShapeTool.RECTANGLE;
         myShapes = new ArrayList<Shapes>();
         this.penColor = Color.black;
         this.fill = true;
