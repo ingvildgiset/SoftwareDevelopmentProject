@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 public class ColorBar extends JPanel {
     private DrawManager drawManager;
 
+
     public ColorBar(DrawManager drawManager) {
         this.drawManager = drawManager;
+
         setLayout(new GridLayout(13,1));
         setBackground(Color.lightGray);
 
@@ -42,6 +44,29 @@ public class ColorBar extends JPanel {
         JButton cyanButton = new JButton();
         cyanButton.setBackground(Color.CYAN);
 
+        // The selected color buttons
+        JButton penColorButton = new JButton("1.");
+        penColorButton.setBackground(null);
+        JButton fillColorButton = new JButton("2.");
+        fillColorButton.setBackground(null);
+
+
+        JRadioButton penColor = new JRadioButton("Pen");
+        penColor.setSelected(true);
+        penColor.setBackground(null);
+        penColor.setOpaque(true);
+        JRadioButton fillColor = new JRadioButton("Fill");
+        fillColor.setBackground(null);
+        fillColor.setOpaque(true);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(penColor);
+        group.add(fillColor);
+
+        Icon noFill = new ImageIcon(getClass().getResource("images/nocolor.png"));
+        JButton noFillButton = new JButton(noFill);
+
+
 
 // Button for color chooser
         Icon colorwheel = new ImageIcon(getClass().getResource("images/wheel.png"));
@@ -58,38 +83,161 @@ public class ColorBar extends JPanel {
         });
 
 
-        // The selected color buttons
-        JButton firstColorButton = new JButton("1.");
-        firstColorButton.setBackground(null);
-
-        JButton secondColorButton = new JButton("2.");
-        secondColorButton.setBackground(null);
-
-
         //ActionListeners for buttons
-        yellowButton.addActionListener(e -> firstColorButton.setBackground(Color.YELLOW));
+        yellowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.YELLOW);
+                    penColor.setBackground(Color.YELLOW);
+                    penColor.setForeground(Color.BLACK);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.YELLOW);
+                    fillColor.setBackground(Color.YELLOW);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
+
         blueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                firstColorButton.setBackground(Color.BLUE);
-                System.out.println("update");
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.BLUE);
+                    penColor.setBackground(Color.BLUE);
+                    penColor.setForeground(Color.WHITE);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.BLUE);
+                    fillColor.setBackground(Color.BLUE);
+                    fillColor.setForeground(Color.WHITE);
+                }
             }
         });
-        greenButton.addActionListener(e -> firstColorButton.setBackground(Color.GREEN));
-        redButton.addActionListener(e -> firstColorButton.setBackground(Color.RED));
+        greenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.GREEN);
+                    penColor.setBackground(Color.GREEN);
+                    penColor.setForeground(Color.BLACK);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.GREEN);
+                    fillColor.setBackground(Color.GREEN);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
+
+        redButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.RED);
+                    penColor.setBackground(Color.RED);
+                    penColor.setForeground(Color.BLACK);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.RED);
+                    fillColor.setBackground(Color.RED);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
         blackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                firstColorButton.setBackground(Color.BLACK);
-                firstColorButton.setForeground(Color.WHITE);
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.BLACK);
+                    penColor.setBackground(Color.BLACK);
+                    penColor.setForeground(Color.WHITE);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.BLACK);
+                    fillColor.setBackground(Color.BLACK);
+                    fillColor.setForeground(Color.WHITE);
+                }
             }
         });
-        magentaButton.addActionListener(e -> firstColorButton.setBackground(Color.MAGENTA));
-        whiteButton.addActionListener(e -> firstColorButton.setBackground(Color.WHITE));
+
+
+        magentaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.MAGENTA);
+                    penColor.setBackground(Color.MAGENTA);
+                    penColor.setForeground(Color.BLACK);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.MAGENTA);
+                    fillColor.setBackground(Color.MAGENTA);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
+
+        whiteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.WHITE);
+                    penColor.setBackground(Color.WHITE);
+                    penColor.setForeground(Color.BLACK);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.WHITE);
+                    fillColor.setBackground(Color.WHITE);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
+
+        pinkButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.PINK);
+                    penColor.setBackground(Color.PINK);
+                    penColor.setForeground(Color.BLACK);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.PINK);
+                    fillColor.setBackground(Color.PINK);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
+
+        cyanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(Color.CYAN);
+                    penColor.setBackground(Color.CYAN);
+                    penColor.setForeground(Color.BLACK);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.CYAN);
+                    fillColor.setBackground(Color.CYAN);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
+
+
+        noFillButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fillColor.isSelected()){
+                    drawManager.setFillColor(Color.YELLOW);
+                    fillColor.setBackground(null);
+                    fillColor.setForeground(Color.BLACK);
+                }
+            }
+        });
 
 // Adding color buttons to panel
-        add(firstColorButton);
-        add(secondColorButton);
+
+
+                add(penColor);
+      //  add(penColorButton);
+        add(fillColor);
+      //  add(fillColorButton);
+        add(noFillButton);
         add(blackButton);
         add(yellowButton);
         add(whiteButton);

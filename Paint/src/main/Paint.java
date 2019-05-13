@@ -35,9 +35,10 @@ public class Paint {
 
         colorMenu.setPreferredSize(new Dimension(50, 100));
 
+        container.add(colorMenu, BorderLayout.WEST);
         container.add(drawManager, BorderLayout.CENTER);
         container.add(shapeMenu, BorderLayout.NORTH);
-        container.add(colorMenu, BorderLayout.WEST);
+
 
 
         //set features for frame
