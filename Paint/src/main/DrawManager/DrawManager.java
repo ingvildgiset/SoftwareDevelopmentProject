@@ -35,7 +35,6 @@ public class DrawManager extends JPanel {
 
     private Graphics2D graphics;
 
-
     //
     private List<Shapes> myShapes;
     private Shapes currentShape;
@@ -117,7 +116,6 @@ public class DrawManager extends JPanel {
         }
     }
 
-
     public void setShapeTool(ShapeTool shapeTool){
         this.shapeTool = shapeTool;
     }
@@ -140,8 +138,6 @@ public class DrawManager extends JPanel {
 
     }
 
-
-
     public void load(String filepath){
         try {
             Image newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
@@ -159,7 +155,14 @@ public class DrawManager extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void undo(){
+        System.out.println("undo");
+    }
+
+    public void redo(){
+        System.out.println("redo");
     }
 
 

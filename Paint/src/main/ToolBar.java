@@ -16,7 +16,6 @@ public class ToolBar extends JPanel{
     private File file;
 
 
-
     public ToolBar(DrawManager drawManager){
         this.drawManager = drawManager;
 
@@ -33,7 +32,8 @@ public class ToolBar extends JPanel{
         Icon line = new ImageIcon(getClass().getResource("images/line.png"));
         JButton lineButton = new JButton(line);
 
-        JButton plotButton = new JButton("Plot");
+        Icon dot = new ImageIcon(getClass().getResource("images/dot.png"));
+        JButton plotButton = new JButton(dot);
 
         Icon poly = new ImageIcon(getClass().getResource("images/star.png"));
         JButton polygonButton = new JButton(poly);
@@ -51,15 +51,19 @@ public class ToolBar extends JPanel{
         JButton clearButton = new JButton("Clear All");
         JButton loadButton = new JButton("Load");
 
-
         lineButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.LINE));
         ellipseButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.ELLIPSE));
         rectangleButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.RECTANGLE));
         plotButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.PLOT));
         polygonButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.POLYGON));
-        undoButton.addActionListener(e -> System.out.println("Remove last thing"));
+        undoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("undo");
+                drawManager.undo();
+            }
+        });
         redoButton.addActionListener(e -> System.out.println("redo"));
-
 
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -113,8 +117,5 @@ public class ToolBar extends JPanel{
         add(saveAsButton);
         add(loadButton);
     }
-
-
-
 
 }

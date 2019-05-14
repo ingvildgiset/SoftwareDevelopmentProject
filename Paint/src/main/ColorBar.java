@@ -67,11 +67,11 @@ public class ColorBar extends JPanel {
         JButton noFillButton = new JButton(noFill);
 
 
-
 // Button for color chooser
         Icon colorwheel = new ImageIcon(getClass().getResource("images/wheel.png"));
         JButton colorButton = new JButton(colorwheel);
         colorButton.setBackground(Color.WHITE);
+
         colorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +86,6 @@ public class ColorBar extends JPanel {
                 }
             }
         });
-
 
         //ActionListeners for buttons
         yellowButton.addActionListener(new ActionListener() {
@@ -162,7 +161,6 @@ public class ColorBar extends JPanel {
             }
         });
 
-
         magentaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -223,7 +221,6 @@ public class ColorBar extends JPanel {
             }
         });
 
-
         noFillButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -237,9 +234,7 @@ public class ColorBar extends JPanel {
 
 // Adding color buttons to panel
         add(penColor);
-      //  add(penColorButton);
         add(fillColor);
-      //  add(fillColorButton);
         add(noFillButton);
         add(blackButton);
         add(yellowButton);
