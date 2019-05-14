@@ -5,11 +5,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import Image.Image;
@@ -45,7 +42,7 @@ public class DrawManager extends JPanel {
 
         this.shapeTool = ShapeTool.LINE;
         myShapes = new ArrayList<Shapes>();
-        this.image = new Image(900, 900);
+        this.image = new Image(1000, 1000);
 
         this.penColor = Color.BLACK;
         this.fill = false;
@@ -55,6 +52,8 @@ public class DrawManager extends JPanel {
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 clickPoint = e.getPoint();
+                System.out.println(clickPoint);
+
                 switch (shapeTool){
                     case PLOT:
                         currentShape = new Plot(clickPoint.x, clickPoint.y, penColor);
@@ -159,8 +158,6 @@ public class DrawManager extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 
 }
