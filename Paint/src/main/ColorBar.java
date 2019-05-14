@@ -67,21 +67,25 @@ public class ColorBar extends JPanel {
         JButton noFillButton = new JButton(noFill);
 
 
-
 // Button for color chooser
         Icon colorwheel = new ImageIcon(getClass().getResource("images/wheel.png"));
         JButton colorButton = new JButton(colorwheel);
         colorButton.setBackground(Color.WHITE);
+
         colorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("color chooser skal komme her");
                 Color newColor = JColorChooser.showDialog(null, "Choose a different color", Color.BLACK);
-                // Over her, skal null være this??
-                // Asigns the chosen color to colorButton
+                if (penColor.isSelected()){
+                    drawManager.setPenColor(newColor);
+                    penColor.setBackground(newColor);
+                } else if (fillColor.isSelected()){
+                    drawManager.setFillColor(newColor);
+                    fillColor.setBackground(newColor);
+                }
             }
         });
-
 
         //ActionListeners for buttons
         yellowButton.addActionListener(new ActionListener() {
@@ -157,7 +161,6 @@ public class ColorBar extends JPanel {
             }
         });
 
-
         magentaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -218,7 +221,6 @@ public class ColorBar extends JPanel {
             }
         });
 
-
         noFillButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -226,18 +228,13 @@ public class ColorBar extends JPanel {
                     drawManager.fillOff();
                     fillColor.setBackground(null);
                     fillColor.setForeground(Color.BLACK);
-
                 }
             }
         });
 
 // Adding color buttons to panel
-
-
-                add(penColor);
-      //  add(penColorButton);
+        add(penColor);
         add(fillColor);
-      //  add(fillColorButton);
         add(noFillButton);
         add(blackButton);
         add(yellowButton);
