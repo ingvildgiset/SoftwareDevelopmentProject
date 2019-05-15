@@ -1,10 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import java.util.IdentityHashMap;
 
 import DrawManager.*;
 
@@ -21,6 +21,8 @@ public class ToolBar extends JPanel{
         setLayout(new FlowLayout());
         //setLayout(new FlowLayout(FlowLayout.LEFT, 1,1));
         setBackground(Color.lightGray);
+        setFocusable(true);
+
 
         Icon rectangle = new ImageIcon(getClass().getResource("images/rectangle.png"));
         JButton rectangleButton = new JButton(rectangle);
@@ -55,6 +57,7 @@ public class ToolBar extends JPanel{
         rectangleButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.RECTANGLE));
         plotButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.PLOT));
         polygonButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.POLYGON));
+
         undoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +65,17 @@ public class ToolBar extends JPanel{
                 drawManager.undo();
             }
         });
+
+        // CTRL+Z Keybindings
+        Object undoAction = new Object();
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((KeyEvent.VK_Z), InputEvent.CTRL_MASK),undoAction);
+        getActionMap().put(undoAction, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                System.err.println("escape 1");
+                drawManager.undo();
+            }
+        });
+
         redoButton.addActionListener(e -> System.out.println("redo"));
 
         clearButton.addActionListener(new ActionListener() {
@@ -96,8 +110,7 @@ public class ToolBar extends JPanel{
                         "VEC files", "vec");
                 fileChooser.setFileFilter(filter);
 
-                if (fileChooser.showOpenDialog(saveAsButton) == JFileChooser.APPROVE_OPTION) {
-
+                if (fileChooser.showSaveDialog(saveAsButton) == JFileChooser.APPROVE_OPTION) {
                     String filePath = fileChooser.getSelectedFile().getPath();
                     drawManager.save(filePath);
                 }

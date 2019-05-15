@@ -1,4 +1,3 @@
-import Config.Config;
 import DrawManager.DrawManager;
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +55,11 @@ public class Paint {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
+
     }
+
+
 
     public static void main(String[] args) {
         Paint myPaint = new Paint();

@@ -2,10 +2,9 @@ package DrawManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.io.IOException;
+import java.util.List;
 import SquareImage.*;
 import Shapes.Rectangle;
 import Shapes.Polygon;
@@ -48,9 +47,7 @@ public class DrawManager extends JPanel {
         this.penColor = Color.BLACK;
         this.fill = false;
         this.fillColor = Color.BLACK;
-
         this.image = new SquareImage(parentPanel.getHeight());
-
 
 
         addMouseListener(new MouseAdapter() {
@@ -139,6 +136,7 @@ public class DrawManager extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+
         if (canvas == null) {
             canvas = createImage(100, 100);
             graphics = (Graphics2D) canvas.getGraphics();
@@ -173,8 +171,11 @@ public class DrawManager extends JPanel {
     }
 
     public void clearCanvas(){
-        System.out.println("Clear Canvas");
-
+        List<Shapes> currentImages = image.getShapes();
+        if(currentImages.size() > 0) {
+            currentImages.removeAll(currentImages);
+        }
+        repaint();
     }
 
     public void load(String filepath){
@@ -199,12 +200,17 @@ public class DrawManager extends JPanel {
     }
 
     public void undo(){
-        System.out.println("undo");
+       List<Shapes> currentImages = image.getShapes();
+        if(currentImages.size() > 0) {
+            currentImages.remove(currentImages.size() - 1 );
+        }
+        repaint();
     }
 
 
     public double toVecCoord(int pixel){
         return (double)pixel/image.getSize();
     }
+
 
 }
