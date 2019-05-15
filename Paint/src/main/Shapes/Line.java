@@ -37,7 +37,6 @@ public class Line extends Shapes {
     @Override
     public void draw(Graphics graphics, SquareImage image) {
         graphics.setColor(getBoarderColor());
-
         graphics.drawLine((int)((x1)*image.getSize()), (int)((y1)*image.getSize()), (int)((x2)*image.getSize()), (int)((y2)*image.getSize()));
     }
 

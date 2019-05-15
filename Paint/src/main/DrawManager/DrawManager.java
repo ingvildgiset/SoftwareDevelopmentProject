@@ -50,9 +50,7 @@ public class DrawManager extends JPanel {
         this.penColor = Color.BLACK;
         this.fill = false;
         this.fillColor = Color.BLACK;
-
         this.image = new SquareImage(parentPanel.getHeight());
-
 
 
         addMouseListener(new MouseAdapter() {
@@ -114,6 +112,7 @@ public class DrawManager extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
 
         if (canvas == null) {
             canvas = createImage(100, 100);

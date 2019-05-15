@@ -110,8 +110,7 @@ public class ToolBar extends JPanel{
                         "VEC files", "vec");
                 fileChooser.setFileFilter(filter);
 
-                if (fileChooser.showOpenDialog(saveAsButton) == JFileChooser.APPROVE_OPTION) {
-
+                if (fileChooser.showSaveDialog(saveAsButton) == JFileChooser.APPROVE_OPTION) {
                     String filePath = fileChooser.getSelectedFile().getPath();
                     drawManager.save(filePath);
                 }
