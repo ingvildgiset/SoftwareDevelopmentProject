@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 import DrawManager.*;
@@ -21,6 +23,7 @@ public class ToolBar extends JPanel{
         setLayout(new FlowLayout());
         //setLayout(new FlowLayout(FlowLayout.LEFT, 1,1));
         setBackground(Color.lightGray);
+        setFocusable(true);
 
         Icon rectangle = new ImageIcon(getClass().getResource("images/rectangle.png"));
         JButton rectangleButton = new JButton(rectangle);
@@ -55,6 +58,7 @@ public class ToolBar extends JPanel{
         rectangleButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.RECTANGLE));
         plotButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.PLOT));
         polygonButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.POLYGON));
+
         undoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +66,22 @@ public class ToolBar extends JPanel{
                 drawManager.undo();
             }
         });
+
+        // CTRL + Z
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) { }
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if ((e.getKeyCode() == KeyEvent.VK_Z) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+                    System.out.println("should undo!");
+                    drawManager.undo();
+                } }
+            @Override
+            public void keyReleased(KeyEvent e) { }
+        });
+
+
         redoButton.addActionListener(e -> System.out.println("redo"));
 
         clearButton.addActionListener(new ActionListener() {

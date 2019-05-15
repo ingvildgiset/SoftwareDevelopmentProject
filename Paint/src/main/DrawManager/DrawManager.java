@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import SquareImage.*;
@@ -57,12 +58,6 @@ public class DrawManager extends JPanel {
 
         //set JPanel Colour
         setBackground(Color.WHITE);
-
-
-
-
-
-
 
 
         addMouseListener(new MouseAdapter() {
@@ -185,7 +180,13 @@ public class DrawManager extends JPanel {
     }
 
     public void undo(){
-        System.out.println("undo");
+       List<Shapes> currentImages = image.getShapes();
+       System.out.println(image.getShapes());
+        if(currentImages.size() > 0) {
+            currentImages.remove(currentImages.size() - 1 );
+            System.out.println("removed last item");
+        }
+        repaint();
     }
 
     public void redo(){
