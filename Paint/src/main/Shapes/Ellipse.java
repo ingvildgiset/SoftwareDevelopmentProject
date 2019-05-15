@@ -1,5 +1,7 @@
 package Shapes;
 
+import SquareImage.SquareImage;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
@@ -36,9 +38,11 @@ public class Ellipse extends Shapes{
     }
 
 
-    public void draw(Graphics graphics){
+    public void draw(Graphics graphics, SquareImage image){
         int x = Math.min((int)Math.round(x1), (int) Math.round(x2));
         int y = Math.min((int)Math.round(y1), (int) Math.round(y2));
+        x = x * image.getSize();
+        y = y * image.getSize();
         graphics.setColor(getBoarderColor());
         graphics.drawOval(x, y, (int) Math.round(width), (int) Math.round(height));
         if(isFilled()){

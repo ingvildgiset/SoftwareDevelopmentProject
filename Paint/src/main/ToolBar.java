@@ -5,10 +5,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
-import java.io.FileFilter;
 
 import DrawManager.*;
-import Shapes.Ellipse;
+
 
 
 public class ToolBar extends JPanel{

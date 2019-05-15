@@ -68,7 +68,7 @@ public class DrawManager extends JPanel {
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 clickPoint = e.getPoint();
-                System.out.print("Du har klikket ");
+                System.out.print("Du har klikket");
                 System.out.println(clickPoint);
 
                 switch (shapeTool){
@@ -110,14 +110,16 @@ public class DrawManager extends JPanel {
         });
 
     }
-    
+
 
     @Override
     public Dimension getPreferredSize() {
         if (parentPanel.getHeight() > parentPanel.getWidth() && parentPanel.getHeight() != 0){
             imageSize = parentPanel.getWidth();
+            image.setSize(imageSize);
         } else if (parentPanel.getWidth() > parentPanel.getHeight() && parentPanel.getWidth() != 0) {
             imageSize = parentPanel.getHeight();
+            image.setSize(imageSize);
         }
         return new Dimension(imageSize, imageSize);
     }
@@ -192,7 +194,8 @@ public class DrawManager extends JPanel {
     }
 
     public double toVecCoord(int pixel){
-        return pixel/image.getSize() * 100;
+        System.out.println((double)pixel/imageSize * 100);
+        return (double)pixel/imageSize * 100;
     }
 
 }

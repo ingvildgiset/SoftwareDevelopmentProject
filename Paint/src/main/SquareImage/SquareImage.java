@@ -1,21 +1,18 @@
-package Image;
+package SquareImage;
 
 import Shapes.Shapes;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Image {
+public class SquareImage{
     private int size;
     private List<Shapes> shapes;
 
-    public Image(int height, int width){
-        this.size = width;
-
+    public SquareImage(int size){
+        this.size = size;
         shapes = new ArrayList<Shapes>();
-
     }
 
     public void addShape(Shapes shape){
@@ -31,12 +28,15 @@ public class Image {
     public void drawAll(Graphics2D graphics){
         System.out.println("tegner alle");
         for (Shapes shapeObj: shapes) {
-            shapeObj.draw(graphics);
+            shapeObj.draw(graphics, this);
         }
     }
 
     public int getSize(){
         return size;
+    }
+    public void setSize(int size){
+        this.size = size;
     }
 
 }

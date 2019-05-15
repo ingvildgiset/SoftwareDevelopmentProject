@@ -1,6 +1,6 @@
 package IO;
 
-import Image.Image;
+import SquareImage.SquareImage;
 import Shapes.*;
 
 import java.io.File;
@@ -16,10 +16,10 @@ import Shapes.Rectangle;
 
 public abstract class VecFileManaging {
 
-    public static Image constructImageFromVecFile(String fileName) throws FileNotFoundException {
-        //Create Image
+    public static SquareImage constructImageFromVecFile(String fileName) throws FileNotFoundException {
+        //Create squareImage
         //config-fil med defaul størrelser her
-        Image newImage = new Image(Config.IMAGE_HEIGHT, Config.IMAGE_WIDTH);
+        SquareImage newImage = new SquareImage(1000);
         Color drawColour = Color.black; //default colour
         Color fillColor = Color.white;
         boolean fill = false;
@@ -68,7 +68,7 @@ public abstract class VecFileManaging {
 
     }
 
-    public static void createVecFileFromImage(String filename, Image image) throws IOException {
+    public static void createVecFileFromImage(String filename, SquareImage image) throws IOException {
         FileWriter fw = new FileWriter(filename + ".vec");
         List<Shapes> shapes = image.getShapes();
 
@@ -89,7 +89,7 @@ public abstract class VecFileManaging {
     //only for testing
     public static void main(String[] args) {
         try {
-            Image image = new Image(200,200);
+            SquareImage image = new SquareImage(200);
             //alle shapes burde egentlig ta inn i prosent. Så får omregningen skje i draw?
 
             Line newLine = new Line(0,0,0.5,0.5, Color.RED);

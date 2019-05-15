@@ -9,6 +9,7 @@ public class ColorBar extends JPanel {
     private DrawManager drawManager;
 
 
+
     public ColorBar(DrawManager drawManager) {
         this.drawManager = drawManager;
 

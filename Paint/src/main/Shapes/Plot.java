@@ -1,7 +1,8 @@
 package Shapes;
 
+import SquareImage.SquareImage;
+
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 public class Plot extends Shapes {
     private double x;
@@ -29,8 +30,8 @@ public class Plot extends Shapes {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g, SquareImage image) {
         g.setColor(getBoarderColor());
-        g.fillOval((int) Math.round(x), (int) Math.round(y), 3, 3);
+        g.fillOval((int) Math.round(x)*image.getSize(), (int) Math.round(y)*image.getSize(), 3, 3);
     }
 }

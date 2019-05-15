@@ -1,5 +1,7 @@
 package Shapes;
 
+import SquareImage.SquareImage;
+
 import java.awt.*;
 
 public class Line extends Shapes {
@@ -33,9 +35,10 @@ public class Line extends Shapes {
     }
 
     @Override
-    public void draw(Graphics graphics ) {
+    public void draw(Graphics graphics, SquareImage image) {
         graphics.setColor(getBoarderColor());
-        graphics.drawLine((int) Math.round(x1), (int) Math.round(y1), (int) Math.round(x2), (int) Math.round(y2));
+
+        graphics.drawLine((int) Math.round(x1)*image.getSize(), (int) Math.round(y1)*image.getSize(), (int) Math.round(x2)*image.getSize(), (int) Math.round(y2)*image.getSize());
     }
 
 }

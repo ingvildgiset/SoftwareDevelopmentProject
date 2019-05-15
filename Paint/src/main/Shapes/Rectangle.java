@@ -1,5 +1,7 @@
 package Shapes;
 
+import SquareImage.SquareImage;
+
 import java.awt.*;
 
 public class Rectangle extends Shapes {
@@ -25,12 +27,14 @@ public class Rectangle extends Shapes {
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(Graphics graphics, SquareImage image) {
         graphics.setColor(getBoarderColor());
-        graphics.drawRect((int) Math.round(Math.min(x1, x2)), (int) Math.round(Math.min(y1, y2)),  (int) Math.round(width), (int) Math.round(height));
+        int x = (int) Math.round(Math.min(x1, x2))*image.getSize();
+        int y = (int) Math.round(Math.min(y1, y2))*image.getSize();
+        graphics.drawRect(x, y,  (int) Math.round(width), (int) Math.round(height));
         if (isFilled()){
             graphics.setColor(getFillColor());
-            graphics.fillRect((int) Math.round(Math.min(x1, x2)), (int) Math.round(Math.min(y1, y2)),  (int) Math.round(width), (int) Math.round(height));
+            graphics.fillRect(x, y,  (int) Math.round(width), (int) Math.round(height));
         }
     }
 
