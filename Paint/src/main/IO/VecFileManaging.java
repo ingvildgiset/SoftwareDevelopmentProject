@@ -19,7 +19,7 @@ public abstract class VecFileManaging {
     public static SquareImage constructImageFromVecFile(String fileName) throws FileNotFoundException {
         //Create squareImage
         //config-fil med defaul størrelser her
-        SquareImage newImage = new SquareImage(1000);
+        SquareImage newImage = new SquareImage(0);
         Color drawColour = Color.black; //default colour
         Color fillColor = Color.white;
         boolean fill = false;
@@ -44,19 +44,19 @@ public abstract class VecFileManaging {
                     }
                     break;
                 case "LINE":
-                    Line newLine = new Line(Double.parseDouble(command[1])*Config.IMAGE_WIDTH, Double.parseDouble(command[2])*Config.IMAGE_HEIGHT, Double.parseDouble(command[3])*Config.IMAGE_WIDTH, Double.parseDouble(command[4])*Config.IMAGE_HEIGHT, drawColour);
+                    Line newLine = new Line(Double.parseDouble(command[1]), Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4]), drawColour);
                     newImage.addShape(newLine);
                     break;
                 case "PLOT":
-                    Plot newPlot = new Plot(Double.parseDouble(command[1])*Config.IMAGE_WIDTH, Double.parseDouble(command[2])*Config.IMAGE_HEIGHT, drawColour);
+                    Plot newPlot = new Plot(Double.parseDouble(command[1]), Double.parseDouble(command[2]), drawColour);
                     newImage.addShape(newPlot);
                     break;
                 case "RECTANGLE":
-                    Rectangle newRec = new Rectangle(Double.parseDouble(command[1])*Config.IMAGE_WIDTH, Double.parseDouble(command[2])*Config.IMAGE_HEIGHT, Double.parseDouble(command[3])*Config.IMAGE_WIDTH, Double.parseDouble(command[4])*Config.IMAGE_HEIGHT, drawColour, fill, fillColor);
+                    Rectangle newRec = new Rectangle(Double.parseDouble(command[1]), Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4]), drawColour, fill, fillColor);
                     newImage.addShape(newRec);
                     break;
                 case "ELLIPSE":
-                    Ellipse newEllipse = new Ellipse(Double.parseDouble(command[1])*Config.IMAGE_WIDTH, Double.parseDouble(command[2])*Config.IMAGE_HEIGHT, Double.parseDouble(command[3])*Config.IMAGE_WIDTH, Double.parseDouble(command[4])*Config.IMAGE_HEIGHT, drawColour, fill, fillColor);
+                    Ellipse newEllipse = new Ellipse(Double.parseDouble(command[1]), Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4]), drawColour, fill, fillColor);
                     newImage.addShape(newEllipse);
                     break;
                 default:
@@ -80,6 +80,7 @@ public abstract class VecFileManaging {
         }
 
         fw.close();
+        int a = 0;
 
     }
 

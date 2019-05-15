@@ -16,8 +16,8 @@ public class Ellipse extends Shapes{
         this.x2 = x2;
         this.y2 = y2;
 
-        this.height = Math.abs(x1 - x2);
-        this.width = Math.abs(y1 - y2);
+        this.height = Math.abs(y1 - y2);
+        this.width = Math.abs(x1 - x2);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Ellipse extends Shapes{
     @Override
     public String toVecFormat() {
         String vec = colorToVecFormat();
-        vec = vec + "ELLIPSE " + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
+        vec = vec + "ELLIPSE " + Double.toString(x1) + " " + Double.toString(y1) + " " + Double.toString(x2) + " " + Double.toString(y2) + "\n";
         return vec;
     }
 
