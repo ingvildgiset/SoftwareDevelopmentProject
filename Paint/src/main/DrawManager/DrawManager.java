@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Image.Image;
+import SquareImage.*;
 import Shapes.Rectangle;
 import Shapes.*;
 
@@ -18,53 +18,71 @@ import static IO.VecFileManaging.createVecFileFromImage;
 
 public class DrawManager extends JPanel {
     private java.awt.Image canvas;          //the actual graphic image that we are drawing on
-    private Image image;
+    private SquareImage image;
 
-    //settings
+    //Drawing settings
     private ShapeTool shapeTool;
     private Color penColor;
     private Color fillColor;
     private boolean fill;
 
-    // Mouse coordinates
+    //Mouse coordinates
     private Point clickPoint;
     private Point releasePoint;
 
     private Graphics2D graphics;
 
-    //
+    //Shapes
     private List<Shapes> myShapes;
     private Shapes currentShape;
 
 
-    public DrawManager() {
+    private int imageSize;
+
+    private JPanel parentPanel;
+
+
+    public DrawManager(JPanel parentPanel) {
+        this.parentPanel = parentPanel;
 
         this.shapeTool = ShapeTool.LINE;
         myShapes = new ArrayList<Shapes>();
-        this.image = new Image(1000, 1000);
+        this.image = new SquareImage(1000);
+        this.imageSize = 500;
+        System.out.println(imageSize);
 
         this.penColor = Color.BLACK;
         this.fill = false;
         this.fillColor = Color.BLACK;
 
+        //set JPanel Colour
+        setBackground(Color.WHITE);
+
+
+
+
+
+
+
 
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 clickPoint = e.getPoint();
+                System.out.print("Du har klikket ");
                 System.out.println(clickPoint);
 
                 switch (shapeTool){
                     case PLOT:
-                        currentShape = new Plot(clickPoint.x, clickPoint.y, penColor);
+                        currentShape = new Plot(toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), penColor);
                         break;
                     case LINE:
-                        currentShape = new Line(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor);
+                        currentShape = new Line(toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), penColor);
                         break;
                     case RECTANGLE:
-                        currentShape = new Rectangle(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor, fill, fillColor);
+                        currentShape = new Rectangle(toVecCoord(clickPoint.x), toVecCoord(clickPoint.y),toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), penColor, fill, fillColor);
                         break;
                     case ELLIPSE:
-                        currentShape = new Ellipse(clickPoint.x, clickPoint.y, clickPoint.x, clickPoint.y, penColor, fill, fillColor);
+                        currentShape = new Ellipse(toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), penColor, fill, fillColor);
                         break;
                     case POLYGON:
                         System.out.println("tegner polygon");
@@ -83,7 +101,6 @@ public class DrawManager extends JPanel {
             }
         });
 
-
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 releasePoint = e.getPoint();
@@ -93,25 +110,35 @@ public class DrawManager extends JPanel {
         });
 
     }
+    
+
+    @Override
+    public Dimension getPreferredSize() {
+        if (parentPanel.getHeight() > parentPanel.getWidth() && parentPanel.getHeight() != 0){
+            imageSize = parentPanel.getWidth();
+        } else if (parentPanel.getWidth() > parentPanel.getHeight() && parentPanel.getWidth() != 0) {
+            imageSize = parentPanel.getHeight();
+        }
+        return new Dimension(imageSize, imageSize);
+    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        setBackground(Color.WHITE);
+
+
         if (canvas == null) {
-            canvas = createImage(getSize().width, getSize().height);
+            canvas = createImage(100, 100);
+            System.out.println("Lager et nytt bilde");
             graphics = (Graphics2D) canvas.getGraphics();
-        }
-
-
-        if (clickPoint != null) {
-            //set the colour
-            //draw the temp figure
-            currentShape.draw(g);
         }
 
         for (Shapes fig: image.getShapes()){
             //draw all shapes that are added
-            fig.draw(g);
+            fig.draw(g, image);
+        }
+
+        if (clickPoint != null) {
+            currentShape.draw(g, image);
         }
     }
 
@@ -139,7 +166,7 @@ public class DrawManager extends JPanel {
 
     public void load(String filepath){
         try {
-            Image newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
+            SquareImage newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
             this.image = newImage;
             newImage.drawAll(graphics);
             repaint();
@@ -162,6 +189,10 @@ public class DrawManager extends JPanel {
 
     public void redo(){
         System.out.println("redo");
+    }
+
+    public double toVecCoord(int pixel){
+        return pixel/image.getSize() * 100;
     }
 
 }

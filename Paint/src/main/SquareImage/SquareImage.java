@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Image {
-    private int width;
-    private int height;
+    private int size;
     private List<Shapes> shapes;
 
     public Image(int height, int width){
-        this.width = width;
-        this.height = height;
+        this.size = width;
 
         shapes = new ArrayList<Shapes>();
 
@@ -35,6 +33,10 @@ public class Image {
         for (Shapes shapeObj: shapes) {
             shapeObj.draw(graphics);
         }
+    }
+
+    public int getSize(){
+        return size;
     }
 
 }
