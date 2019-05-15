@@ -33,35 +33,26 @@ public class DrawManager extends JPanel {
     private Graphics2D graphics;
 
     //Shapes
-    private List<Shapes> myShapes;
     private Shapes currentShape;
 
-
-    private int imageSize;
 
     private JPanel parentPanel;
 
 
     public DrawManager(JPanel parentPanel) {
+
+        //set JPanel Colour
+        setBackground(Color.WHITE);
         this.parentPanel = parentPanel;
 
-        this.shapeTool = ShapeTool.LINE;
-        myShapes = new ArrayList<Shapes>();
-        this.imageSize = 500;
-        this.image = new SquareImage(500);
-        System.out.println(imageSize);
 
+        //default values
+        this.shapeTool = ShapeTool.LINE;
         this.penColor = Color.BLACK;
         this.fill = false;
         this.fillColor = Color.BLACK;
 
-        //set JPanel Colour
-        setBackground(Color.WHITE);
-
-
-
-
-
+        this.image = new SquareImage(parentPanel.getHeight());
 
 
 
@@ -115,13 +106,11 @@ public class DrawManager extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         if (parentPanel.getHeight() > parentPanel.getWidth() && parentPanel.getHeight() != 0){
-            imageSize = parentPanel.getWidth();
-            image.setSize(imageSize);
+            image.setSize(parentPanel.getWidth());
         } else if (parentPanel.getWidth() > parentPanel.getHeight() && parentPanel.getWidth() != 0) {
-            imageSize = parentPanel.getHeight();
-            image.setSize(imageSize);
+            image.setSize(parentPanel.getHeight());
         }
-        return new Dimension(imageSize, imageSize);
+        return new Dimension(image.getSize(),image.getSize());
     }
 
     public void paintComponent(Graphics g) {
@@ -169,6 +158,8 @@ public class DrawManager extends JPanel {
         try {
             SquareImage newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
             this.image = newImage;
+            //update image according to window
+            image.setSize(parentPanel.getHeight());
             newImage.drawAll(graphics);
             repaint();
         } catch (IOException e) {
@@ -193,7 +184,7 @@ public class DrawManager extends JPanel {
     }
 
     public double toVecCoord(int pixel){
-        return (double)pixel/imageSize;
+        return (double)pixel/image.getSize();
     }
 
 }

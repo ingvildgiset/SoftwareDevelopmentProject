@@ -22,7 +22,7 @@ public class Rectangle extends Shapes {
     @Override
     public String toVecFormat() {
         String vec = colorToVecFormat();
-        vec = vec + "RECTANGLE " + Double.toString(x1) + " " + Double.toString(x2) + " " + Double.toString(y1) + " " + Double.toString(y2) + "\n";
+        vec = vec + "RECTANGLE " + Double.toString(x1) + " " + Double.toString(y1) + " " + Double.toString(x2) + " " + Double.toString(y2) + "\n";
         return vec;
     }
 
@@ -45,7 +45,7 @@ public class Rectangle extends Shapes {
 
         this.height = Math.abs(y1 - y2);
         this.width = Math.abs(x1 - x2);
-        System.out.println(height);
+
 
     }
 
