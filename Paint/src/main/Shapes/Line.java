@@ -38,7 +38,7 @@ public class Line extends Shapes {
     public void draw(Graphics graphics, SquareImage image) {
         graphics.setColor(getBoarderColor());
 
-        graphics.drawLine((int) Math.round(x1)*image.getSize(), (int) Math.round(y1)*image.getSize(), (int) Math.round(x2)*image.getSize(), (int) Math.round(y2)*image.getSize());
+        graphics.drawLine((int)((x1)*image.getSize()), (int)((y1)*image.getSize()), (int)((x2)*image.getSize()), (int)((y2)*image.getSize()));
     }
 
 }

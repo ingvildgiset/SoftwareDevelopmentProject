@@ -47,8 +47,8 @@ public class DrawManager extends JPanel {
 
         this.shapeTool = ShapeTool.LINE;
         myShapes = new ArrayList<Shapes>();
-        this.image = new SquareImage(1000);
         this.imageSize = 500;
+        this.image = new SquareImage(500);
         System.out.println(imageSize);
 
         this.penColor = Color.BLACK;
@@ -104,7 +104,7 @@ public class DrawManager extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 releasePoint = e.getPoint();
-                currentShape.update(releasePoint.x, releasePoint.y);
+                currentShape.update(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y));
                 repaint();
             }
         });
@@ -126,7 +126,6 @@ public class DrawManager extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
 
         if (canvas == null) {
             canvas = createImage(100, 100);
@@ -194,8 +193,7 @@ public class DrawManager extends JPanel {
     }
 
     public double toVecCoord(int pixel){
-        System.out.println((double)pixel/imageSize * 100);
-        return (double)pixel/imageSize * 100;
+        return (double)pixel/imageSize;
     }
 
 }

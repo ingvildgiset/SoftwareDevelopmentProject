@@ -20,7 +20,6 @@ public class Ellipse extends Shapes{
         this.width = Math.abs(y1 - y2);
     }
 
-
     @Override
     public void update(double x2, double y2) {
         this.x2 = x2;
@@ -39,15 +38,15 @@ public class Ellipse extends Shapes{
 
 
     public void draw(Graphics graphics, SquareImage image){
-        int x = Math.min((int)Math.round(x1), (int) Math.round(x2));
-        int y = Math.min((int)Math.round(y1), (int) Math.round(y2));
+        double x = Math.min((x1), (x2));
+        double y = Math.min((y1), (y2));
         x = x * image.getSize();
         y = y * image.getSize();
         graphics.setColor(getBoarderColor());
-        graphics.drawOval(x, y, (int) Math.round(width), (int) Math.round(height));
+        graphics.drawOval((int)x, (int)y, (int)(width*image.getSize()), (int)(height*image.getSize()));
         if(isFilled()){
             graphics.setColor(getFillColor());
-            graphics.fillOval(x, y, (int) Math.round(width), (int) Math.round(height));
+            graphics.fillOval((int)x, (int)y, (int)(width*image.getSize()), (int)(height*image.getSize()));
         }
     }
 

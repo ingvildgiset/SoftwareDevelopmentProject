@@ -29,12 +29,12 @@ public class Rectangle extends Shapes {
     @Override
     public void draw(Graphics graphics, SquareImage image) {
         graphics.setColor(getBoarderColor());
-        int x = (int) Math.round(Math.min(x1, x2))*image.getSize();
-        int y = (int) Math.round(Math.min(y1, y2))*image.getSize();
-        graphics.drawRect(x, y,  (int) Math.round(width), (int) Math.round(height));
+        int x = (int) ((Math.min(x1, x2))*image.getSize());
+        int y = (int) ((Math.min(y1, y2))*image.getSize());
+        graphics.drawRect(x, y,  (int)(width*image.getSize()), (int)(height*image.getSize()));
         if (isFilled()){
             graphics.setColor(getFillColor());
-            graphics.fillRect(x, y,  (int) Math.round(width), (int) Math.round(height));
+            graphics.fillRect(x, y,  (int)(width*image.getSize()), (int)(height*image.getSize()));
         }
     }
 
@@ -45,6 +45,7 @@ public class Rectangle extends Shapes {
 
         this.height = Math.abs(y1 - y2);
         this.width = Math.abs(x1 - x2);
+        System.out.println(height);
 
     }
 

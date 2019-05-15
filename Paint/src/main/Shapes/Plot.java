@@ -32,6 +32,6 @@ public class Plot extends Shapes {
     @Override
     public void draw(Graphics g, SquareImage image) {
         g.setColor(getBoarderColor());
-        g.fillOval((int) Math.round(x)*image.getSize(), (int) Math.round(y)*image.getSize(), 3, 3);
+        g.fillOval((int) ((x)*image.getSize()), (int) ((y)*image.getSize()), 3, 3);
     }
 }
