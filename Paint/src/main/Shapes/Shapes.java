@@ -40,6 +40,7 @@ public abstract class Shapes {
     public abstract String toVecFormat();
     public abstract void draw(Graphics g, SquareImage image);
     public abstract void update(double x2, double y2);
+    public abstract boolean addPoint(double x2, double y2);
 
     public String colorToVecFormat() {
         String vec = "";

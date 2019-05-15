@@ -49,5 +49,10 @@ public class Rectangle extends Shapes {
 
     }
 
+    @Override
+    public boolean addPoint(double x2, double y2) {
+        return false;
+    }
+
 
 }
