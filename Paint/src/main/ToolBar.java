@@ -23,7 +23,6 @@ public class ToolBar extends JPanel{
         setBackground(Color.lightGray);
         setFocusable(true);
 
-
         Icon rectangle = new ImageIcon(getClass().getResource("images/rectangle.png"));
         JButton rectangleButton = new JButton(rectangle);
 
