@@ -14,7 +14,6 @@ import static IO.VecFileManaging.createVecFileFromImage;
 
 
 public class DrawManager extends JPanel {
-    private java.awt.Image canvas;          //the actual graphic image that we are drawing on
     private SquareImage image;
 
     //Drawing settings
@@ -27,11 +26,8 @@ public class DrawManager extends JPanel {
     private Point clickPoint;
     private Point releasePoint;
 
-    private Graphics2D graphics;
-
     //Shapes
     private Shapes currentShape;
-
     private JPanel parentPanel;
 
 
@@ -136,11 +132,7 @@ public class DrawManager extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-
-        if (canvas == null) {
-            canvas = createImage(100, 100);
-            graphics = (Graphics2D) canvas.getGraphics();
-        }
+        Graphics2D graphics2D = (Graphics2D) g; 
 
         for (Shapes fig: image.getShapes()){
             //draw all shapes that are added
@@ -184,7 +176,6 @@ public class DrawManager extends JPanel {
             this.image = newImage;
             //update image according to window
             image.setSize(parentPanel.getHeight());
-            newImage.drawAllShapes(graphics);
             repaint();
         } catch (IOException e) {
             e.printStackTrace();
