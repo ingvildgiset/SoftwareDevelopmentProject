@@ -23,6 +23,12 @@ public class Plot extends Shapes {
     }
 
     @Override
+    public boolean addPoint(double x2, double y2) {
+        return false;
+
+    }
+
+    @Override
     public String toVecFormat() {
         String vec = "PEN #" + Integer.toHexString(getBoarderColor().getRGB()).substring(2) + "\n";
         vec = vec + "PLOT " + Double.toString(x) + " " + Double.toString(y) + "\n";

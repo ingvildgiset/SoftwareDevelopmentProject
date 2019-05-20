@@ -10,22 +10,21 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.awt.*;
-import Config.Config;
 import Shapes.Rectangle;
+import Shapes.Polygon;
 
 
 public abstract class VecFileManaging {
 
-    public static SquareImage constructImageFromVecFile(String fileName) throws FileNotFoundException {
-        //Create squareImage
-        //config-fil med defaul størrelser her
+    public static SquareImage constructImageFromVecFile(String filePath) throws FileNotFoundException {
         SquareImage newImage = new SquareImage(0);
-        Color drawColour = Color.black; //default colour
+
+        //default values
+        Color drawColour = Color.black;
         Color fillColor = Color.white;
         boolean fill = false;
 
-        //her må vi kanskje legge til en config-fil eller noe som gjør at man kan legge til en annen filsti
-        File file = new File(fileName);
+        File file = new File(filePath);
         Scanner sc = new Scanner(file);
 
         while (sc.hasNextLine()) {
@@ -59,6 +58,22 @@ public abstract class VecFileManaging {
                     Ellipse newEllipse = new Ellipse(Double.parseDouble(command[1]), Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4]), drawColour, fill, fillColor);
                     newImage.addShape(newEllipse);
                     break;
+                case "POLYGON":
+                    int numberOfPoints = command.length/2;
+                    double[] xVal = new double[numberOfPoints];
+                    double[] yVal = new double[numberOfPoints];
+                    int j = 0;
+
+                    for (int i = 1; i < command.length-1; i += 2){
+                        xVal[j] = Double.parseDouble(command[i]);
+                        yVal[j] = Double.parseDouble(command[i+1]);
+                        j++;
+                    }
+
+                    Polygon newPolygon = new Polygon(numberOfPoints, xVal, yVal, drawColour, fill, fillColor);
+                    newImage.addShape(newPolygon);
+
+                    break;
                 default:
                     System.out.println(command[0]);
                     System.out.println("Reading file, invalid command");
@@ -73,41 +88,12 @@ public abstract class VecFileManaging {
         List<Shapes> shapes = image.getShapes();
 
         for(Shapes shapeObj: shapes){
-            //iterer gjennom alle objekter i bildet.
-            //bruker polymorfisme -> husk i rapport
             String command = shapeObj.toVecFormat();
             fw.write(command);
         }
-
         fw.close();
-        int a = 0;
-
     }
-
-
-
-
-    //only for testing
-    public static void main(String[] args) {
-        try {
-            SquareImage image = new SquareImage(200);
-            //alle shapes burde egentlig ta inn i prosent. Så får omregningen skje i draw?
-
-            Line newLine = new Line(0,0,0.5,0.5, Color.RED);
-            image.addShape(newLine);
-           // Rectangle newRec = new Rectangle(0,0,100,100, Color.BLUE, true, Color.GREEN);
-           // image.addShape(newRec);
-
-            createVecFileFromImage("test.vec", image);
-        }
-        catch (java.io.FileNotFoundException e){
-            System.out.println(e);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
 }
+
+
 

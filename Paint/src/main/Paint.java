@@ -1,4 +1,3 @@
-import Config.Config;
 import DrawManager.DrawManager;
 import javax.swing.*;
 import java.awt.*;

@@ -3,7 +3,7 @@ package Shapes;
 import SquareImage.SquareImage;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
+
 
 public class Ellipse extends Shapes{
     private double x1, y1, x2, y2;
@@ -30,13 +30,18 @@ public class Ellipse extends Shapes{
     }
 
     @Override
+    public boolean addPoint(double x2, double y2) {
+        return false;
+    }
+
+    @Override
     public String toVecFormat() {
         String vec = colorToVecFormat();
         vec = vec + "ELLIPSE " + Double.toString(x1) + " " + Double.toString(y1) + " " + Double.toString(x2) + " " + Double.toString(y2) + "\n";
         return vec;
     }
 
-
+    @Override
     public void draw(Graphics graphics, SquareImage image){
         double x = Math.min((x1), (x2));
         double y = Math.min((y1), (y2));

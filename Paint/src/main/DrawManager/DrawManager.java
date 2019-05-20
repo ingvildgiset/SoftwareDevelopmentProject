@@ -4,12 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import SquareImage.*;
 import Shapes.Rectangle;
+import Shapes.Polygon;
 import Shapes.*;
 
 import static IO.VecFileManaging.createVecFileFromImage;
@@ -34,7 +32,6 @@ public class DrawManager extends JPanel {
     //Shapes
     private Shapes currentShape;
 
-
     private JPanel parentPanel;
 
 
@@ -56,8 +53,6 @@ public class DrawManager extends JPanel {
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 clickPoint = e.getPoint();
-                System.out.print("Du har klikket");
-                System.out.println(clickPoint);
 
                 switch (shapeTool){
                     case PLOT:
@@ -73,7 +68,13 @@ public class DrawManager extends JPanel {
                         currentShape = new Ellipse(toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), toVecCoord(clickPoint.x), toVecCoord(clickPoint.y), penColor, fill, fillColor);
                         break;
                     case POLYGON:
-                        System.out.println("tegner polygon");
+                        //create a new
+                        if (currentShape == null){
+                            double xVal[] = {toVecCoord(clickPoint.x), toVecCoord(clickPoint.x)};
+                            double yVal[] = {toVecCoord(clickPoint.y), toVecCoord(clickPoint.y)};
+                            currentShape = new Polygon(xVal.length, xVal, yVal, penColor, fill, fillColor);
+                        }
+
                         break;
                     default:
                         System.out.println("Feil valg av shape");
@@ -82,9 +83,19 @@ public class DrawManager extends JPanel {
 
             public void mouseReleased(MouseEvent e){
                 //myShapes.add(currentShape);
-                image.addShape(currentShape);
-                clickPoint = null;
-                currentShape = null;
+                if (shapeTool == ShapeTool.POLYGON && releasePoint != null){
+
+                    if(currentShape.addPoint(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y))){
+                        image.addShape(currentShape);
+                        clickPoint = null;
+                        currentShape = null;
+                    };
+                } else {
+                    //her er releasepoint strengt tatt ikke oppdatert, skal vi da legge til det li
+                    image.addShape(currentShape);
+                    clickPoint = null;
+                    currentShape = null;
+                }
                 repaint();
             }
         });
@@ -92,8 +103,20 @@ public class DrawManager extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 releasePoint = e.getPoint();
+
                 currentShape.update(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y));
                 repaint();
+
+            }
+
+            public void mouseMoved(MouseEvent e) {
+                if (shapeTool == ShapeTool.POLYGON && clickPoint!=null){
+                    releasePoint = e.getPoint();
+                    currentShape.update(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y));
+                    //tester
+                    repaint();
+                }
+
             }
         });
 
@@ -116,7 +139,6 @@ public class DrawManager extends JPanel {
 
         if (canvas == null) {
             canvas = createImage(100, 100);
-            System.out.println("Lager et nytt bilde");
             graphics = (Graphics2D) canvas.getGraphics();
         }
 
@@ -128,6 +150,7 @@ public class DrawManager extends JPanel {
         if (clickPoint != null) {
             currentShape.draw(g, image);
         }
+
     }
 
     public void setShapeTool(ShapeTool shapeTool){
@@ -161,7 +184,7 @@ public class DrawManager extends JPanel {
             this.image = newImage;
             //update image according to window
             image.setSize(parentPanel.getHeight());
-            newImage.drawAll(graphics);
+            newImage.drawAllShapes(graphics);
             repaint();
         } catch (IOException e) {
             e.printStackTrace();
@@ -184,9 +207,6 @@ public class DrawManager extends JPanel {
         repaint();
     }
 
-    public void redo(){
-        System.out.println("redo");
-    }
 
     public double toVecCoord(int pixel){
         return (double)pixel/image.getSize();

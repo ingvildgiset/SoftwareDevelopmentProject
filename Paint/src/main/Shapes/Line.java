@@ -28,6 +28,12 @@ public class Line extends Shapes {
     }
 
     @Override
+    public boolean addPoint(double x2, double y2) {
+        return false;
+
+    }
+
+    @Override
     public String toVecFormat() {
         String vec = "PEN #" + Integer.toHexString(getBoarderColor().getRGB()).substring(2) + "\n";
         vec = vec + "LINE " + Double.toString(x1) + " " + Double.toString(y1) + " " + Double.toString(x2) + " " + Double.toString(y2) + "\n";
