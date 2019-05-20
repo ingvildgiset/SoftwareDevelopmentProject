@@ -3,6 +3,7 @@ package DrawManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.List;
 import SquareImage.*;
@@ -30,6 +31,12 @@ public class DrawManager extends JPanel {
     private Shapes currentShape;
     private JPanel parentPanel;
 
+    private boolean zoomed;
+
+
+    //new code
+    private double zoomMultiplier;
+
 
     public DrawManager(JPanel parentPanel) {
 
@@ -44,11 +51,16 @@ public class DrawManager extends JPanel {
         this.fill = false;
         this.fillColor = Color.BLACK;
         this.image = new SquareImage(parentPanel.getHeight());
+        this.zoomed = false;
+        this.zoomMultiplier = 1;
 
 
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 clickPoint = e.getPoint();
+                System.out.println(clickPoint);
+                //https://stackoverflow.com/questions/33925884/zoom-in-and-out-of-jpanel
+                //hvis man må scale museklikket også?????
 
                 switch (shapeTool){
                     case PLOT:
@@ -121,32 +133,67 @@ public class DrawManager extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
+        System.out.println("Set preferred size");
+        int size = 0;
         if (parentPanel.getHeight() > parentPanel.getWidth() && parentPanel.getHeight() != 0){
-            image.setSize(parentPanel.getWidth());
+            size = parentPanel.getWidth();
         } else if (parentPanel.getWidth() > parentPanel.getHeight() && parentPanel.getWidth() != 0) {
-            image.setSize(parentPanel.getHeight());
+            size = parentPanel.getHeight();
         }
-        return new Dimension(image.getSize(),image.getSize());
+        //check for Max values
+
+        image.setSize(size);
+        System.out.println(size);
+        return new Dimension(size,size);
     }
+
+
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D graphics2D = (Graphics2D) g; 
+        Graphics2D graphics2D = (Graphics2D) g;
+
+        if (zoomed == true){
+            /*
+            AffineTransform at = new AffineTransform();
+            at.scale(2.0, 2.0);
+            //prevZoomFactor = zoomFactor;
+            graphics2D.transform(at);
+            //zoomed = false;
+            //https://stackoverflow.com/questions/6543453/zooming-in-and-zooming-out-within-a-panel
+
+            //graphics2D.scale(2.0, 2.0); // draw everything twice the original size
+            */
+
+            int w = image.getSize();
+            int h = image.getSize();
+            // Translate used to make sure scale is centere
+            graphics2D.translate(w/2, h/2);
+            graphics2D.scale(2, 2);
+            graphics2D.translate(-w/2, -h/2);
+            setSize(new Dimension(5000,5000));
+        }
 
         for (Shapes fig: image.getShapes()){
             //draw all shapes that are added
-            fig.draw(g, image);
+            fig.draw(graphics2D, image);
         }
 
         if (clickPoint != null) {
-            currentShape.draw(g, image);
+            currentShape.draw(graphics2D, image);
         }
+
+
 
     }
 
     public void setShapeTool(ShapeTool shapeTool){
         this.shapeTool = shapeTool;
+        this.zoomed = true;
+        System.out.println("ZOOOOOM");
+        repaint();
     }
 
     public void setPenColor(Color color){
@@ -160,6 +207,10 @@ public class DrawManager extends JPanel {
 
     public void fillOff(){
         this.fill = false;
+    }
+
+    public void setScaleFactor(int scaleFactor){
+        //sette scale factor
     }
 
     public void clearCanvas(){

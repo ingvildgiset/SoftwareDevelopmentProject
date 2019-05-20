@@ -30,13 +30,6 @@ public class SquareImage{
         return shapes;
     }
 
-    public void drawAllShapes(Graphics2D graphics){
-        for (Shapes shapeObj: shapes) {
-            shapeObj.draw(graphics, this);
-        }
-    }
-
-
 
 }
 
