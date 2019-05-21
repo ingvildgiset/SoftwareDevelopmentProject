@@ -30,6 +30,8 @@ public abstract class VecFileManaging {
         while (sc.hasNextLine()) {
             String[] command = sc.nextLine().split(" ");
 
+            //read in a figure from one line
+
             switch (command[0]){
                 case "PEN":
                     drawColour = Color.decode(command[1]);
@@ -92,6 +94,10 @@ public abstract class VecFileManaging {
             fw.write(command);
         }
         fw.close();
+    }
+
+    public static void readShape(String command){
+
     }
 }
 

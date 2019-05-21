@@ -19,10 +19,7 @@ public abstract class Shapes {
         this.fillColor = fillColor;
     }
 
-    //Felles funksjoner
-    public Color getBoarderColor(){
-        return boarderColor;
-    }
+    public Color getBoarderColor(){ return boarderColor; }
 
     public Color getFillColor(){
         return fillColor;
@@ -31,8 +28,6 @@ public abstract class Shapes {
     public boolean isFilled(){
         return fill;
     }
-
-
 
 
     //alle må implementere disse to metodene.

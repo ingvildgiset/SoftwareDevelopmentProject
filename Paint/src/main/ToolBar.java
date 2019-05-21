@@ -4,7 +4,6 @@ import java.awt.event.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
-import java.util.IdentityHashMap;
 
 import DrawManager.*;
 
