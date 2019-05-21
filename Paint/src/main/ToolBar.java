@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
 
 import DrawManager.*;
 
@@ -11,14 +10,12 @@ import DrawManager.*;
 
 public class ToolBar extends JPanel{
     private DrawManager drawManager;
-    private File file;
-    double zoomMultiplier;
+    int historyIndex;
 
     public ToolBar(DrawManager drawManager){
         this.drawManager = drawManager;
 
         setLayout(new FlowLayout());
-        //setLayout(new FlowLayout(FlowLayout.LEFT, 1,1));
         setBackground(Color.lightGray);
         setFocusable(true);
 
@@ -45,31 +42,22 @@ public class ToolBar extends JPanel{
         JButton clearButton = new JButton("Clear All");
         JButton loadButton = new JButton("Load");
 
-        String[] zoomStrings = {"50%", "75%", "100%", "125%", "200%", "300%"};
+        String[] historyString= {"1", "2", "3"};
         //Creates ComboBox
-        final JComboBox zoomList = new JComboBox(zoomStrings);
-        zoomList.setSelectedIndex(2);
-        zoomList.addActionListener(new ActionListener() {
+        final JComboBox history = new JComboBox(historyString);
+        history.setSelectedIndex(2);
+        history.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String zoom = (String) zoomList.getSelectedItem();
-                if (zoom == "50%") {
-                    zoomMultiplier = 0.5;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "75%") {
-                    zoomMultiplier = 0.75;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "100%") {
-                    zoomMultiplier = 1;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "125%") {
-                    zoomMultiplier = 1.25;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "200%"){
-                    zoomMultiplier = 2;
-                } else if (zoom == "300%"){
-                    zoomMultiplier = 3;
+                String zoom = (String) history.getSelectedItem();
+                if (zoom == "1") {
+                    historyIndex = 0;
+                } else if (zoom == "2") {
+                    historyIndex = 1;
+                } else if (zoom == "3") {
+                    historyIndex = 2;
                 }
+                drawManager.newImageFromHistory(historyIndex);
             }
             });
 
@@ -146,6 +134,6 @@ public class ToolBar extends JPanel{
         add(clearButton);
         add(saveAsButton);
         add(loadButton);
-        add(zoomList);
+        add(history);
     }
 }
