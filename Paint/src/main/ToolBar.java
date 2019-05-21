@@ -56,21 +56,18 @@ public class ToolBar extends JPanel{
                 String zoom = (String) zoomList.getSelectedItem();
                 if (zoom == "50%") {
                     zoomMultiplier = 0.5;
-                    System.out.println(zoomMultiplier);
                 } else if (zoom == "75%") {
                     zoomMultiplier = 0.75;
-                    System.out.println(zoomMultiplier);
                 } else if (zoom == "100%") {
                     zoomMultiplier = 1;
-                    System.out.println(zoomMultiplier);
                 } else if (zoom == "125%") {
                     zoomMultiplier = 1.25;
-                    System.out.println(zoomMultiplier);
                 } else if (zoom == "200%"){
                     zoomMultiplier = 2;
                 } else if (zoom == "300%"){
                     zoomMultiplier = 3;
                 }
+                drawManager.setZoomMultiplier(zoomMultiplier);
             }
             });
 

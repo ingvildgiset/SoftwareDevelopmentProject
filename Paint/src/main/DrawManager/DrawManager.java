@@ -14,7 +14,7 @@ import Shapes.*;
 import static IO.VecFileManaging.createVecFileFromImage;
 
 
-public class DrawManager extends JPanel {
+public class DrawManager extends JPanel{
     private SquareImage image;
 
     //Drawing settings
@@ -30,9 +30,6 @@ public class DrawManager extends JPanel {
     //Shapes
     private Shapes currentShape;
     private JPanel parentPanel;
-
-    private boolean zoomed;
-
 
     //new code
     private double zoomMultiplier;
@@ -51,7 +48,6 @@ public class DrawManager extends JPanel {
         this.fill = false;
         this.fillColor = Color.BLACK;
         this.image = new SquareImage(parentPanel.getHeight());
-        this.zoomed = false;
         this.zoomMultiplier = 1;
 
 
@@ -161,7 +157,7 @@ public class DrawManager extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        System.out.println("Get preferred size");
+        System.out.println("Get preferred size of drawManager");
         int a = 0;
         image.setSize(500);
         return new Dimension(500, 500);
@@ -175,7 +171,7 @@ public class DrawManager extends JPanel {
 
         Graphics2D graphics2D = (Graphics2D) g;
 
-        if (zoomed == true){
+        if (zoomMultiplier != 1){
             /*
             AffineTransform at = new AffineTransform();
             at.scale(2.0, 2.0);
@@ -193,7 +189,6 @@ public class DrawManager extends JPanel {
             graphics2D.translate(w/2, h/2);
             graphics2D.scale(2, 2);
             graphics2D.translate(-w/2, -h/2);
-            setSize(new Dimension(5000,5000));
         }
 
         for (Shapes fig: image.getShapes()){
@@ -211,8 +206,6 @@ public class DrawManager extends JPanel {
 
     public void setShapeTool(ShapeTool shapeTool){
         this.shapeTool = shapeTool;
-        this.zoomed = true;
-        System.out.println("ZOOOOOM");
         repaint();
     }
 
@@ -227,10 +220,6 @@ public class DrawManager extends JPanel {
 
     public void fillOff(){
         this.fill = false;
-    }
-
-    public void setScaleFactor(int scaleFactor){
-        //sette scale factor
     }
 
     public void clearCanvas(){
@@ -261,6 +250,16 @@ public class DrawManager extends JPanel {
         }
     }
 
+    public void setZoomMultiplier(double zoomMultiplier){
+        this.zoomMultiplier = zoomMultiplier;
+        System.out.println("Skal zoome til");
+        System.out.println(zoomMultiplier);
+        repaint();
+    }
+
+
+
+
     public void undo(){
        List<Shapes> currentImages = image.getShapes();
         if(currentImages.size() > 0) {
@@ -273,7 +272,6 @@ public class DrawManager extends JPanel {
     public double toVecCoord(int pixel){
         return (double)pixel/image.getSize();
     }
-
 
 
 }
