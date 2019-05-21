@@ -165,6 +165,7 @@ public class DrawManager extends JPanel{
         int h = (int)(zoomMultiplier*size.height);
         System.out.println(w);
         return new Dimension(w, h);
+        //det her må være sånn for at scrollPane skal fungere? 
     }
 
 
@@ -175,10 +176,20 @@ public class DrawManager extends JPanel{
 
         Graphics2D graphics2D = (Graphics2D) g;
 
-        double x = (getWidth()  - zoomMultiplier*size.width)/2;
+       /* double x = (getWidth()  - zoomMultiplier*size.width)/2;
         double y = (getHeight() - zoomMultiplier*size.height)/2;
         AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-        at.scale(zoomMultiplier, zoomMultiplier);
+        at.scale(zoomMultiplier, zoomMultiplier);*/
+
+
+        if (zoomMultiplier != 1) {
+            int w = size.width;
+            int h = size.height;
+            // Translate used to make sure scale is centere
+            graphics2D.translate(w/zoomMultiplier, h/zoomMultiplier);
+            graphics2D.scale(zoomMultiplier, zoomMultiplier);
+            graphics2D.translate(-w/zoomMultiplier, -h/zoomMultiplier);
+        }
 
         for (Shapes fig: image.getShapes()){
             //draw all shapes that are added
