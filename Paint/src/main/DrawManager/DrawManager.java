@@ -33,9 +33,11 @@ public class DrawManager extends JPanel{
 
     //new code
     private double zoomMultiplier;
+    Dimension size;
 
 
     public DrawManager(JPanel parentPanel) {
+        size = new Dimension(600,600);
 
         //set JPanel Colour
         setBackground(Color.WHITE);
@@ -47,8 +49,10 @@ public class DrawManager extends JPanel{
         this.penColor = Color.BLACK;
         this.fill = false;
         this.fillColor = Color.BLACK;
-        this.image = new SquareImage(parentPanel.getHeight());
+        this.image = new SquareImage(600);
         this.zoomMultiplier = 1;
+
+
 
 
         addMouseListener(new MouseAdapter() {
@@ -157,10 +161,10 @@ public class DrawManager extends JPanel{
 
     @Override
     public Dimension getPreferredSize() {
-        System.out.println("Get preferred size of drawManager");
-        int a = 0;
-        image.setSize(500);
-        return new Dimension(500, 500);
+        int w = (int)(zoomMultiplier*size.width);
+        int h = (int)(zoomMultiplier*size.height);
+        System.out.println(w);
+        return new Dimension(w, h);
     }
 
 
@@ -171,25 +175,10 @@ public class DrawManager extends JPanel{
 
         Graphics2D graphics2D = (Graphics2D) g;
 
-        if (zoomMultiplier != 1){
-            /*
-            AffineTransform at = new AffineTransform();
-            at.scale(2.0, 2.0);
-            //prevZoomFactor = zoomFactor;
-            graphics2D.transform(at);
-            //zoomed = false;
-            //https://stackoverflow.com/questions/6543453/zooming-in-and-zooming-out-within-a-panel
-
-            //graphics2D.scale(2.0, 2.0); // draw everything twice the original size
-            */
-
-            int w = image.getSize();
-            int h = image.getSize();
-            // Translate used to make sure scale is centere
-            graphics2D.translate(w/2, h/2);
-            graphics2D.scale(2, 2);
-            graphics2D.translate(-w/2, -h/2);
-        }
+        double x = (getWidth()  - zoomMultiplier*size.width)/2;
+        double y = (getHeight() - zoomMultiplier*size.height)/2;
+        AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+        at.scale(zoomMultiplier, zoomMultiplier);
 
         for (Shapes fig: image.getShapes()){
             //draw all shapes that are added
@@ -255,6 +244,7 @@ public class DrawManager extends JPanel{
         System.out.println("Skal zoome til");
         System.out.println(zoomMultiplier);
         repaint();
+        revalidate();
     }
 
 
