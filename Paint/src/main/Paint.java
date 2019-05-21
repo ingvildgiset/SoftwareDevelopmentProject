@@ -59,18 +59,18 @@ public class Paint {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int confirmed = JOptionPane.showConfirmDialog(null,
-                        "You have not saved. Are you sure you want to exit?",
-                        "User Confirmation", JOptionPane.YES_NO_OPTION);
-                if (confirmed == JOptionPane.YES_OPTION)
+                if (drawManager.getImageSize() == 0){
                     frame.dispose();
+                } else {
+                    int confirmed = JOptionPane.showConfirmDialog(null,
+                            "Are you sure you want to exit?",
+                            "User Confirmation", JOptionPane.YES_NO_OPTION);
+                    if (confirmed == JOptionPane.YES_OPTION)
+                        frame.dispose();
+                }
             }
-
         });
         frame.setVisible(true);
-
-
-
     }
 
 

@@ -1,14 +1,17 @@
 package DrawManager;
 
+import Shapes.Polygon;
+import Shapes.Rectangle;
+import Shapes.*;
+import SquareImage.SquareImage;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.util.List;
-import SquareImage.*;
-import Shapes.Rectangle;
-import Shapes.Polygon;
-import Shapes.*;
 
 import static IO.VecFileManaging.createVecFileFromImage;
 
@@ -205,6 +208,11 @@ public class DrawManager extends JPanel {
             currentImages.remove(currentImages.size() - 1 );
         }
         repaint();
+    }
+
+    public int getImageSize(){
+        List<Shapes> drawings = image.getShapes();
+        return drawings.size();
     }
 
 
