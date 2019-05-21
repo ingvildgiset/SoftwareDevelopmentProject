@@ -27,8 +27,6 @@ public class Polygon extends Shapes {
         for (double y : yValues){
             this.yValues.add(y);
         }
-
-
     }
 
     @Override
@@ -71,13 +69,9 @@ public class Polygon extends Shapes {
 
 
                     g.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
-
                 }
-
             }
-            
         }
-
     }
 
     @Override
@@ -102,7 +96,6 @@ public class Polygon extends Shapes {
             numberOfPoints +=1;
             this.xValues.add(x2);
             this.yValues.add(y2);
-
         }
         return false;
     }

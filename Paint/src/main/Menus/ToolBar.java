@@ -1,14 +1,16 @@
+package Menus;
+
+import DrawManager.DrawManager;
+import DrawManager.ShapeTool;
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.IdentityHashMap;
-
-import DrawManager.*;
-
-
 
 public class ToolBar extends JPanel{
     private DrawManager drawManager;
@@ -23,22 +25,22 @@ public class ToolBar extends JPanel{
         setBackground(Color.lightGray);
         setFocusable(true);
 
-        Icon rectangle = new ImageIcon(getClass().getResource("images/rectangle.png"));
+        Icon rectangle = new ImageIcon(getClass().getResource("../images/rectangle.png"));
         JButton rectangleButton = new JButton(rectangle);
 
-        Icon ellipse = new ImageIcon(getClass().getResource("images/ellipse.png"));
+        Icon ellipse = new ImageIcon(getClass().getResource("../images/ellipse.png"));
         JButton ellipseButton = new JButton(ellipse);
 
-        Icon line = new ImageIcon(getClass().getResource("images/line.png"));
+        Icon line = new ImageIcon(getClass().getResource("../images/line.png"));
         JButton lineButton = new JButton(line);
 
-        Icon dot = new ImageIcon(getClass().getResource("images/dot.png"));
+        Icon dot = new ImageIcon(getClass().getResource("../images/dot.png"));
         JButton plotButton = new JButton(dot);
 
-        Icon poly = new ImageIcon(getClass().getResource("images/star.png"));
+        Icon poly = new ImageIcon(getClass().getResource("../images/star.png"));
         JButton polygonButton = new JButton(poly);
 
-        Icon undo = new ImageIcon(getClass().getResource("images/undo.png"));
+        Icon undo = new ImageIcon(getClass().getResource("../images/undo.png"));
         JButton undoButton = new JButton(undo);
 
         JButton saveAsButton = new JButton("Save As");

@@ -1,6 +1,11 @@
 import DrawManager.DrawManager;
+import Menus.ColorBar;
+import Menus.ToolBar;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Paint {
 
@@ -39,8 +44,6 @@ public class Paint {
         ColorBar colorMenu = new ColorBar(drawManager);
 
 
-
-
         fixedPanel.add(drawManager);
 
         colorMenu.setPreferredSize(new Dimension(50, 100));
@@ -52,9 +55,20 @@ public class Paint {
 
 
         //set features for frame
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null,
+                        "You have not saved. Are you sure you want to exit?",
+                        "User Confirmation", JOptionPane.YES_NO_OPTION);
+                if (confirmed == JOptionPane.YES_OPTION)
+                    frame.dispose();
+            }
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        });
         frame.setVisible(true);
+
 
 
     }

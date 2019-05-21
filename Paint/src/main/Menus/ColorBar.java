@@ -1,3 +1,5 @@
+package Menus;
+
 import DrawManager.DrawManager;
 
 import javax.swing.*;
@@ -7,7 +9,6 @@ import java.awt.event.ActionListener;
 
 public class ColorBar extends JPanel {
     private DrawManager drawManager;
-
 
 
     public ColorBar(DrawManager drawManager) {
@@ -64,12 +65,12 @@ public class ColorBar extends JPanel {
         group.add(penColor);
         group.add(fillColor);
 
-        Icon noFill = new ImageIcon(getClass().getResource("images/nocolor.png"));
+        Icon noFill = new ImageIcon(getClass().getResource("../images/nocolor.png"));
         JButton noFillButton = new JButton(noFill);
 
 
 // Button for color chooser
-        Icon colorwheel = new ImageIcon(getClass().getResource("images/wheel.png"));
+        Icon colorwheel = new ImageIcon(getClass().getResource("../images/wheel.png"));
         JButton colorButton = new JButton(colorwheel);
         colorButton.setBackground(Color.WHITE);
 
