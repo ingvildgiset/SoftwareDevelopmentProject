@@ -131,8 +131,8 @@ public class DrawManager extends JPanel {
     }
 
 
-    @Override
-    public Dimension getPreferredSize() {
+
+   /* public Dimension getPreferredSize() {
         System.out.println("Set preferred size");
         int size = 0;
         if (parentPanel.getHeight() > parentPanel.getWidth() && parentPanel.getHeight() != 0){
@@ -145,6 +145,26 @@ public class DrawManager extends JPanel {
         image.setSize(size);
         System.out.println(size);
         return new Dimension(size,size);
+    }*/
+
+    @Override
+    public Dimension getMinimumSize() {
+        System.out.println("minimum");
+        return getPreferredSize();
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        System.out.println("maksimum");
+        return getPreferredSize();
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        System.out.println("Get preferred size");
+        int a = 0;
+        image.setSize(500);
+        return new Dimension(500, 500);
     }
 
 

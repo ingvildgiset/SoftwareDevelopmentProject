@@ -29,12 +29,10 @@ public class Paint {
         container.setLayout(new BorderLayout());
 
 
-        System.out.println("Creating fixed panel");
         JPanel fixedPanel = new JPanel(new GridBagLayout());
         fixedPanel.setBackground(Color.lightGray);
 
 
-        System.out.println("Creating drawManager");
         DrawManager drawManager = new DrawManager(fixedPanel);
         ToolBar shapeMenu = new ToolBar(drawManager);
         ColorBar colorMenu = new ColorBar(drawManager);
@@ -42,28 +40,18 @@ public class Paint {
 
 
         //creating a scrollPane with drawManager as client
-        System.out.println("Creating scrollPane");
         JScrollPane scrollPane = new JScrollPane(drawManager);
 
 
 
 
-
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = constraints.BOTH;
-        fixedPanel.add(scrollPane, constraints);
-
-
-
-
-
-        System.out.println("adding to fixedPanel");
         fixedPanel.add(scrollPane);
-        System.out.println("adding to container");
+
+
+
+        fixedPanel.add(scrollPane);
         container.add(colorMenu, BorderLayout.WEST);
-        System.out.println("adding ading to contaienr");
         container.add(fixedPanel, BorderLayout.CENTER);
-        System.out.println("adding to container");
         container.add(shapeMenu, BorderLayout.NORTH);
 
 
