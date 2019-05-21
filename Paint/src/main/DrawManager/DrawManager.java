@@ -16,7 +16,6 @@ import static IO.VecFileManaging.createVecFileFromImage;
 
 public class DrawManager extends JPanel {
     private SquareImage currentImage;
-    private List<Shapes> shapes;
 
 
     //Drawing settings
@@ -210,9 +209,9 @@ public class DrawManager extends JPanel {
        List<Shapes> currentImages = currentImage.getShapes();
         if(currentImages.size() > 0) {
             currentImages.remove(currentImages.size() - 1 );
-            //uodate image History
-            SquareImage prevVersion = new SquareImage(currentImage);
-            imageHistory.add(prevVersion);
+            //vet ikke helt hvordan undo skal være med her
+            //SquareImage prevVersion = new SquareImage(currentImage);
+            //imageHistory.add(prevVersion);
         }
 
         repaint();
@@ -220,11 +219,13 @@ public class DrawManager extends JPanel {
 
     public void newImageFromHistory(int historyIndex){
         currentImage = imageHistory.get(historyIndex);
+        int a = 0;
         repaint();
     }
 
-    public void revealImageHistory(){
-
+    public List<String> revealImageHistory(){
+        System.out.println(currentImage.getCommandHistory());
+        return currentImage.getCommandHistory();
     }
 
 

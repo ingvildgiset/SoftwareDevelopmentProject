@@ -13,6 +13,7 @@ import java.util.List;
 public class SquareImage{
     private int size;
     private List<Shapes> shapes;
+    private List<String> commandHistory;
 
     /** Creates a Image with specified size
      * @param size the size for the image. Image is always square.
@@ -20,13 +21,17 @@ public class SquareImage{
     public SquareImage(int size){
         this.size = size;
         shapes = new ArrayList<Shapes>();
+        commandHistory = new ArrayList<String>();
     }
 
-    //Copy Constructor
+    /** Creates a deep Copy of the image object
+     * @param image the object to take a copy off
+     */
     public SquareImage(SquareImage image)
     {
         this.size = image.size;
         shapes = new ArrayList<Shapes>(image.shapes);
+        commandHistory = new ArrayList<String>(image.commandHistory);
     }
 
     /**
@@ -51,6 +56,7 @@ public class SquareImage{
      */
     public void addShape(Shapes shape){
         shapes.add(shape);
+        commandHistory.add(shape.toString());
     }
 
     /**
@@ -59,6 +65,10 @@ public class SquareImage{
      */
     public List<Shapes> getShapes(){
         return shapes;
+    }
+
+    public List<String> getCommandHistory(){
+        return commandHistory;
     }
 
 }

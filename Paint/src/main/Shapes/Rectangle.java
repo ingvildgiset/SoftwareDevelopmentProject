@@ -26,6 +26,12 @@ public class Rectangle extends Shapes {
     }
 
     @Override
+    public String toString() {
+        return "Rectangle";
+    }
+
+
+    @Override
     public void draw(Graphics graphics, SquareImage image) {
         graphics.setColor(getPenColor());
         int x = (int) ((Math.min(x1, x2))*image.getSize());

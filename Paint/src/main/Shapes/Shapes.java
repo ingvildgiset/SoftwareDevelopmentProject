@@ -71,6 +71,10 @@ public abstract class Shapes {
      */
     public abstract String toVecFormat();
 
+
+    public abstract String toString();
+
+
     /**
      * Method for drawing the shape object on the canvas. Customized for different shape
      * object

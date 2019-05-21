@@ -57,6 +57,11 @@ public class Ellipse extends Shapes{
         return vec;
     }
 
+    @Override
+    public String toString() {
+        return "Ellipse";
+    }
+
 
     /**
      * Draws the ellipse on the graphicObject. Uses the image and its size to calculate the correct

@@ -59,6 +59,12 @@ public class Plot extends Shapes {
         return vec;
     }
 
+    @Override
+    public String toString() {
+        return "Plot";
+    }
+
+
     /**
      * Draws the plot on the canvas.
      * @param g Graphic object used for drawing

@@ -52,6 +52,12 @@ public class Polygon extends Shapes {
         return vec;
     }
 
+    @Override
+    public String toString() {
+        return "Polygon";
+    }
+
+
     /**
      * Draws the polygon on the graphicObject. Uses the image and its size to calculate the correct
      * coordinates.

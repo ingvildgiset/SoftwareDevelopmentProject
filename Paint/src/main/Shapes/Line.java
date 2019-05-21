@@ -52,6 +52,12 @@ public class Line extends Shapes {
         return vec;
     }
 
+    @Override
+    public String toString() {
+        return "Line";
+    }
+
+
     /**
      * Draws the Line on the graphicObject. Uses the image and its size to calculate the correct
      * coordinates.
