@@ -53,8 +53,7 @@ public class Polygon extends Shapes {
     }
 
     @Override
-    public String toString() {
-        return "Polygon";
+    public String toString() {return "Polygon #" + Integer.toHexString(getPenColor().getRGB()).substring(2);
     }
 
 

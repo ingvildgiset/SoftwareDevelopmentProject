@@ -27,7 +27,11 @@ public class Rectangle extends Shapes {
 
     @Override
     public String toString() {
-        return "Rectangle";
+        String str = "Rectangle #" + Integer.toHexString(getPenColor().getRGB()).substring(2);
+        if (isFilled()){
+            str += " + " + Integer.toHexString(getFillColor().getRGB()).substring(2);
+        }
+        return str;
     }
 
 

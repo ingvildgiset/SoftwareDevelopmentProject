@@ -14,7 +14,6 @@ import java.util.Vector;
 public class SquareImage{
     private int size;
     private List<Shapes> shapes;
-    private Vector<String> commandHistory;
 
     /** Creates a Image with specified size
      * @param size the size for the image. Image is always square.
@@ -22,7 +21,6 @@ public class SquareImage{
     public SquareImage(int size){
         this.size = size;
         shapes = new ArrayList<Shapes>();
-        commandHistory = new Vector<>();
     }
 
     /** Creates a deep Copy of the image object
@@ -32,7 +30,6 @@ public class SquareImage{
     {
         this.size = image.size;
         shapes = new ArrayList<Shapes>(image.shapes);
-        commandHistory = new Vector<>(image.commandHistory);
     }
 
     /**
@@ -57,7 +54,6 @@ public class SquareImage{
      */
     public void addShape(Shapes shape){
         shapes.add(shape);
-        commandHistory.add(shape.toString());
     }
 
     /**
@@ -68,9 +64,6 @@ public class SquareImage{
         return shapes;
     }
 
-    public Vector<String> getCommandHistory(){
-        return commandHistory;
-    }
 
 }
 

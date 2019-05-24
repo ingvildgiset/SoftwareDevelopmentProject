@@ -59,7 +59,11 @@ public class Ellipse extends Shapes{
 
     @Override
     public String toString() {
-        return "Ellipse";
+        String str = "Ellipse #" + Integer.toHexString(getPenColor().getRGB()).substring(2);
+        if (isFilled()){
+            str += " + " + Integer.toHexString(getFillColor().getRGB()).substring(2);
+        }
+        return str;
     }
 
 

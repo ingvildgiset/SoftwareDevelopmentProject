@@ -18,6 +18,7 @@ import static IO.VecFileManaging.createVecFileFromImage;
 
 public class DrawManager extends JPanel {
     private SquareImage currentImage;
+    private JPanel parentPanel;
 
 
     //Drawing settings
@@ -34,9 +35,10 @@ public class DrawManager extends JPanel {
     //Shapes
     private Shapes currentShape;
 
-    private JPanel parentPanel;
+
 
     private List<SquareImage> imageHistory;
+    private Vector<String> commandHistory;
 
 
     public DrawManager(JPanel parentPanel) {
@@ -54,6 +56,7 @@ public class DrawManager extends JPanel {
         this.currentImage = new SquareImage(parentPanel.getHeight());
 
         imageHistory = new ArrayList<SquareImage>();
+        commandHistory = new Vector<>();
 
 
         addMouseListener(new MouseAdapter() {
@@ -97,6 +100,7 @@ public class DrawManager extends JPanel {
                         //add this version to history
                         SquareImage prevVersion = new SquareImage(currentImage);
                         imageHistory.add(prevVersion);
+                        commandHistory.add(currentShape.toString());
 
                         clickPoint = null;
                         currentShape = null;
@@ -107,6 +111,7 @@ public class DrawManager extends JPanel {
                     //add this version to history
                     SquareImage prevVersion = new SquareImage(currentImage);
                     imageHistory.add(prevVersion);
+                    commandHistory.add(currentShape.toString());
                     clickPoint = null;
                     currentShape = null;
                 }
@@ -211,23 +216,37 @@ public class DrawManager extends JPanel {
        List<Shapes> currentImages = currentImage.getShapes();
         if(currentImages.size() > 0) {
             currentImages.remove(currentImages.size() - 1 );
-            //vet ikke helt hvordan undo skal være med her
-            //SquareImage prevVersion = new SquareImage(currentImage);
-            //imageHistory.add(prevVersion);
         }
 
         repaint();
     }
 
     public void newImageFromHistory(int historyIndex){
+
+        //create a new image to add to the history
+        currentImage = new SquareImage(imageHistory.get(historyIndex));
+        SquareImage prevVersion = new SquareImage(currentImage);
+        imageHistory.add(prevVersion);
+        commandHistory.add("Edit from history");
+        System.out.println(imageHistory);
+        repaint();
+
+        for (int i = 0; i < imageHistory.size(); i++){
+            System.out.print(imageHistory.get(i) + "        ");
+            System.out.println(imageHistory.get(i).getShapes().size());
+        }
+    }
+
+    public void previewImageFromHistory(int historyIndex){
+        //create a new image to add to the history
         currentImage = imageHistory.get(historyIndex);
-        int a = 0;
         repaint();
     }
 
+
+
     public Vector<String> revealImageHistory(){
-        System.out.println(currentImage.getCommandHistory());
-        return currentImage.getCommandHistory();
+        return commandHistory;
     }
 
 

@@ -61,7 +61,11 @@ public class Plot extends Shapes {
 
     @Override
     public String toString() {
-        return "Plot";
+        String str = "Polygon #" + Integer.toHexString(getPenColor().getRGB()).substring(2);
+        if (isFilled()){
+            str += " + " + Integer.toHexString(getFillColor().getRGB()).substring(2);
+        }
+        return str;
     }
 
 

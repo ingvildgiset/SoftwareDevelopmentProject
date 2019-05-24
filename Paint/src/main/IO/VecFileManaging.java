@@ -96,9 +96,6 @@ public abstract class VecFileManaging {
         fw.close();
     }
 
-    public static void readShape(String command){
-
-    }
 }
 
 

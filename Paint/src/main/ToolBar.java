@@ -46,7 +46,7 @@ public class ToolBar extends JPanel{
         JButton loadButton = new JButton("Load");
         JButton historyButton = new JButton("View history");
 
-        JDialog historyDialog = new JDialog(parent, "History");
+
 
 
 
@@ -68,6 +68,7 @@ public class ToolBar extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Reveal history");
+                JDialog historyDialog = new HistoryDialog(parent, drawManager);
                 historyDialog.show();
             }
         });

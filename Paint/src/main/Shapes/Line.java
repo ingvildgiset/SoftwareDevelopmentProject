@@ -54,7 +54,7 @@ public class Line extends Shapes {
 
     @Override
     public String toString() {
-        return "Line";
+        return "Line #" + Integer.toHexString(getPenColor().getRGB()).substring(2);
     }
 
 
