@@ -11,14 +11,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+
 
 import static IO.VecFileManaging.createVecFileFromImage;
 
 
 public class DrawManager extends JPanel {
-    private java.awt.Image canvas;          //the actual graphic image that we are drawing on
-    private SquareImage image;
+    private SquareImage currentImage;
+    private JPanel parentPanel;
+
 
     //Drawing settings
     private ShapeTool shapeTool;
@@ -30,12 +34,14 @@ public class DrawManager extends JPanel {
     private Point clickPoint;
     private Point releasePoint;
 
-    private Graphics2D graphics;
 
     //Shapes
     private Shapes currentShape;
 
-    private JPanel parentPanel;
+
+
+    private List<SquareImage> imageHistory;
+    private Vector<String> commandHistory;
 
 
     public DrawManager(JPanel parentPanel) {
@@ -50,7 +56,10 @@ public class DrawManager extends JPanel {
         this.penColor = Color.BLACK;
         this.fill = false;
         this.fillColor = Color.BLACK;
-        this.image = new SquareImage(parentPanel.getHeight());
+        this.currentImage = new SquareImage(parentPanel.getHeight());
+
+        imageHistory = new ArrayList<SquareImage>();
+        commandHistory = new Vector<>();
 
 
         addMouseListener(new MouseAdapter() {
@@ -89,13 +98,23 @@ public class DrawManager extends JPanel {
                 if (shapeTool == ShapeTool.POLYGON && releasePoint != null){
 
                     if(currentShape.addPoint(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y))){
-                        image.addShape(currentShape);
+                        //update currentImage
+                        currentImage.addShape(currentShape);
+                        //add this version to history
+                        SquareImage prevVersion = new SquareImage(currentImage);
+                        imageHistory.add(prevVersion);
+                        commandHistory.add(currentShape.toString());
+
                         clickPoint = null;
                         currentShape = null;
                     };
                 } else {
                     //her er releasepoint strengt tatt ikke oppdatert, skal vi da legge til det li
-                    image.addShape(currentShape);
+                    currentImage.addShape(currentShape);
+                    //add this version to history
+                    SquareImage prevVersion = new SquareImage(currentImage);
+                    imageHistory.add(prevVersion);
+                    commandHistory.add(currentShape.toString());
                     clickPoint = null;
                     currentShape = null;
                 }
@@ -107,7 +126,7 @@ public class DrawManager extends JPanel {
             public void mouseDragged(MouseEvent e) {
                 releasePoint = e.getPoint();
 
-                currentShape.update(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y));
+                currentShape.resize(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y));
                 repaint();
 
             }
@@ -115,7 +134,7 @@ public class DrawManager extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 if (shapeTool == ShapeTool.POLYGON && clickPoint!=null){
                     releasePoint = e.getPoint();
-                    currentShape.update(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y));
+                    currentShape.resize(toVecCoord(releasePoint.x), toVecCoord(releasePoint.y));
                     //tester
                     repaint();
                 }
@@ -129,29 +148,25 @@ public class DrawManager extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         if (parentPanel.getHeight() > parentPanel.getWidth() && parentPanel.getHeight() != 0){
-            image.setSize(parentPanel.getWidth());
+            currentImage.setSize(parentPanel.getWidth());
         } else if (parentPanel.getWidth() > parentPanel.getHeight() && parentPanel.getWidth() != 0) {
-            image.setSize(parentPanel.getHeight());
+            currentImage.setSize(parentPanel.getHeight());
         }
-        return new Dimension(image.getSize(),image.getSize());
+        return new Dimension(currentImage.getSize(), currentImage.getSize());
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Graphics2D graphics = (Graphics2D) g;
 
-        if (canvas == null) {
-            canvas = createImage(100, 100);
-            graphics = (Graphics2D) canvas.getGraphics();
-        }
-
-        for (Shapes fig: image.getShapes()){
+        for (Shapes fig: currentImage.getShapes()){
             //draw all shapes that are added
-            fig.draw(g, image);
+            fig.draw(graphics, currentImage);
         }
 
         if (clickPoint != null) {
-            currentShape.draw(g, image);
+            currentShape.draw(g, currentImage);
         }
 
     }
@@ -174,7 +189,7 @@ public class DrawManager extends JPanel {
     }
 
     public void clearCanvas(){
-        List<Shapes> currentImages = image.getShapes();
+        List<Shapes> currentImages = currentImage.getShapes();
         if(currentImages.size() > 0) {
             currentImages.removeAll(currentImages);
         }
@@ -184,9 +199,8 @@ public class DrawManager extends JPanel {
     public void load(String filepath){
         try {
             SquareImage newImage = IO.VecFileManaging.constructImageFromVecFile(filepath);
-            this.image = newImage;
-            //update image according to window
-            image.setSize(parentPanel.getHeight());
+            this.currentImage = newImage;
+            currentImage.setSize(parentPanel.getHeight());
             repaint();
         } catch (IOException e) {
             e.printStackTrace();
@@ -195,28 +209,57 @@ public class DrawManager extends JPanel {
 
     public void save(String filepath){
         try{
-            createVecFileFromImage(filepath, image);
+            createVecFileFromImage(filepath, currentImage);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void undo(){
-       List<Shapes> currentImages = image.getShapes();
+       List<Shapes> currentImages = currentImage.getShapes();
         if(currentImages.size() > 0) {
             currentImages.remove(currentImages.size() - 1 );
         }
+
+        repaint();
+    }
+
+    public void newImageFromHistory(int historyIndex){
+
+        //create a new image to add to the history
+        currentImage = new SquareImage(imageHistory.get(historyIndex));
+        SquareImage prevVersion = new SquareImage(currentImage);
+        imageHistory.add(prevVersion);
+        commandHistory.add("Edit from history");
+        System.out.println(imageHistory);
+        repaint();
+
+        for (int i = 0; i < imageHistory.size(); i++){
+            System.out.print(imageHistory.get(i) + "        ");
+            System.out.println(imageHistory.get(i).getShapes().size());
+        }
+    }
+
+    public void previewImageFromHistory(int historyIndex){
+        //create a new image to add to the history
+        currentImage = imageHistory.get(historyIndex);
         repaint();
     }
 
     public int getImageSize(){
-        List<Shapes> drawings = image.getShapes();
+        List<Shapes> drawings = currentImage.getShapes();
         return drawings.size();
     }
 
 
+
+    public Vector<String> revealImageHistory(){
+        return commandHistory;
+    }
+
+
     public double toVecCoord(int pixel){
-        return (double)pixel/image.getSize();
+        return (double)pixel/ currentImage.getSize();
     }
 
 

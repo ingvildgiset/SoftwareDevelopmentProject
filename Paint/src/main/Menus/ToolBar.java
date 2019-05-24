@@ -10,19 +10,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import javax.swing.JFileChooser;
+
 
 
 public class ToolBar extends JPanel{
     private DrawManager drawManager;
-    private File file;
-    double zoomMultiplier;
+    private Frame parent;
 
-    public ToolBar(DrawManager drawManager){
+    public ToolBar(DrawManager drawManager, JFrame parent){
         this.drawManager = drawManager;
+        this.parent = parent;
 
         setLayout(new FlowLayout());
-        //setLayout(new FlowLayout(FlowLayout.LEFT, 1,1));
         setBackground(Color.lightGray);
         setFocusable(true);
 
@@ -48,34 +48,11 @@ public class ToolBar extends JPanel{
 
         JButton clearButton = new JButton("Clear All");
         JButton loadButton = new JButton("Load");
+        JButton historyButton = new JButton("View history");
 
-        String[] zoomStrings = {"50%", "75%", "100%", "125%", "200%", "300%"};
-        //Creates ComboBox
-        final JComboBox zoomList = new JComboBox(zoomStrings);
-        zoomList.setSelectedIndex(2);
-        zoomList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String zoom = (String) zoomList.getSelectedItem();
-                if (zoom == "50%") {
-                    zoomMultiplier = 0.5;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "75%") {
-                    zoomMultiplier = 0.75;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "100%") {
-                    zoomMultiplier = 1;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "125%") {
-                    zoomMultiplier = 1.25;
-                    System.out.println(zoomMultiplier);
-                } else if (zoom == "200%"){
-                    zoomMultiplier = 2;
-                } else if (zoom == "300%"){
-                    zoomMultiplier = 3;
-                }
-            }
-            });
+
+
+
 
         lineButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.LINE));
         ellipseButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.ELLIPSE));
@@ -88,6 +65,15 @@ public class ToolBar extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 System.out.println("undo");
                 drawManager.undo();
+            }
+        });
+
+        historyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Reveal history");
+                JDialog historyDialog = new HistoryDialog(parent, drawManager);
+                historyDialog.show();
             }
         });
 
@@ -149,6 +135,6 @@ public class ToolBar extends JPanel{
         add(clearButton);
         add(saveAsButton);
         add(loadButton);
-        add(zoomList);
+        add(historyButton);
     }
 }
