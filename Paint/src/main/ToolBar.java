@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -11,6 +13,7 @@ import DrawManager.*;
 public class ToolBar extends JPanel{
     private DrawManager drawManager;
     int historyIndex;
+    Vector<String> commandHistory;
 
     public ToolBar(DrawManager drawManager){
         this.drawManager = drawManager;
@@ -42,13 +45,25 @@ public class ToolBar extends JPanel{
         JButton clearButton = new JButton("Clear All");
         JButton loadButton = new JButton("Load");
 
-        String[] historyString= {"1", "2", "3"};
+
+
+
+        //String[] historyString= {"1", "2", "3"};
+        this.commandHistory = new Vector<String>();
+        commandHistory.add("View History");
+
+
         //Creates ComboBox
-        final JComboBox history = new JComboBox(historyString);
-        history.setSelectedIndex(2);
+        final JComboBox history = new JComboBox(commandHistory);
+        history.setSelectedIndex(0);
         history.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //if someone chooses an element
+                commandHistory = drawManager.revealImageHistory();
+                System.out.println("Nå er vi i comboBox");
+                System.out.println(commandHistory);
+
                 String zoom = (String) history.getSelectedItem();
                 if (zoom == "1") {
                     historyIndex = 0;

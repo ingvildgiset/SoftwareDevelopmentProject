@@ -6,6 +6,8 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+
 import SquareImage.*;
 import Shapes.Rectangle;
 import Shapes.Polygon;
@@ -223,7 +225,7 @@ public class DrawManager extends JPanel {
         repaint();
     }
 
-    public List<String> revealImageHistory(){
+    public Vector<String> revealImageHistory(){
         System.out.println(currentImage.getCommandHistory());
         return currentImage.getCommandHistory();
     }

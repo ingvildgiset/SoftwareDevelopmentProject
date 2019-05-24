@@ -3,6 +3,7 @@ package SquareImage;
 import Shapes.Shapes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Class for the actual Image that is showed on Canvas.
@@ -13,7 +14,7 @@ import java.util.List;
 public class SquareImage{
     private int size;
     private List<Shapes> shapes;
-    private List<String> commandHistory;
+    private Vector<String> commandHistory;
 
     /** Creates a Image with specified size
      * @param size the size for the image. Image is always square.
@@ -21,7 +22,7 @@ public class SquareImage{
     public SquareImage(int size){
         this.size = size;
         shapes = new ArrayList<Shapes>();
-        commandHistory = new ArrayList<String>();
+        commandHistory = new Vector<>();
     }
 
     /** Creates a deep Copy of the image object
@@ -31,7 +32,7 @@ public class SquareImage{
     {
         this.size = image.size;
         shapes = new ArrayList<Shapes>(image.shapes);
-        commandHistory = new ArrayList<String>(image.commandHistory);
+        commandHistory = new Vector<>(image.commandHistory);
     }
 
     /**
@@ -67,7 +68,7 @@ public class SquareImage{
         return shapes;
     }
 
-    public List<String> getCommandHistory(){
+    public Vector<String> getCommandHistory(){
         return commandHistory;
     }
 
