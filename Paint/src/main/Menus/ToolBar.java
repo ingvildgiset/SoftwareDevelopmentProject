@@ -12,6 +12,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
+
 public class ToolBar extends JPanel{
     private DrawManager drawManager;
     private File file;
@@ -95,7 +96,6 @@ public class ToolBar extends JPanel{
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((KeyEvent.VK_Z), InputEvent.CTRL_MASK),undoAction);
         getActionMap().put(undoAction, new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                System.err.println("escape 1");
                 drawManager.undo();
             }
         });

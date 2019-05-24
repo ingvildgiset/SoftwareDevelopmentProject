@@ -187,7 +187,6 @@ public class DrawManager extends JPanel {
             this.image = newImage;
             //update image according to window
             image.setSize(parentPanel.getHeight());
-            newImage.drawAllShapes(graphics);
             repaint();
         } catch (IOException e) {
             e.printStackTrace();

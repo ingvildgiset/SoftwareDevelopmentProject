@@ -1,7 +1,6 @@
 package SquareImage;
 
 import Shapes.Shapes;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +27,6 @@ public class SquareImage{
 
     public List<Shapes> getShapes(){
         return shapes;
-    }
-
-    public void drawAllShapes(Graphics2D graphics){
-        for (Shapes shapeObj: shapes) {
-            shapeObj.draw(graphics, this);
-        }
     }
 
 
