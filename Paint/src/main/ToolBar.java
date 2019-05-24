@@ -12,11 +12,11 @@ import DrawManager.*;
 
 public class ToolBar extends JPanel{
     private DrawManager drawManager;
-    int historyIndex;
-    Vector<String> commandHistory;
+    private Frame parent;
 
-    public ToolBar(DrawManager drawManager){
+    public ToolBar(DrawManager drawManager, JFrame parent){
         this.drawManager = drawManager;
+        this.parent = parent;
 
         setLayout(new FlowLayout());
         setBackground(Color.lightGray);
@@ -44,37 +44,11 @@ public class ToolBar extends JPanel{
 
         JButton clearButton = new JButton("Clear All");
         JButton loadButton = new JButton("Load");
+        JButton historyButton = new JButton("View history");
+
+        JDialog historyDialog = new JDialog(parent, "History");
 
 
-
-
-        //String[] historyString= {"1", "2", "3"};
-        this.commandHistory = new Vector<String>();
-        commandHistory.add("View History");
-
-
-        //Creates ComboBox
-        final JComboBox history = new JComboBox(commandHistory);
-        history.setSelectedIndex(0);
-        history.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //if someone chooses an element
-                commandHistory = drawManager.revealImageHistory();
-                System.out.println("Nå er vi i comboBox");
-                System.out.println(commandHistory);
-
-                String zoom = (String) history.getSelectedItem();
-                if (zoom == "1") {
-                    historyIndex = 0;
-                } else if (zoom == "2") {
-                    historyIndex = 1;
-                } else if (zoom == "3") {
-                    historyIndex = 2;
-                }
-                drawManager.newImageFromHistory(historyIndex);
-            }
-            });
 
         lineButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.LINE));
         ellipseButton.addActionListener(e -> drawManager.setShapeTool(ShapeTool.ELLIPSE));
@@ -87,6 +61,14 @@ public class ToolBar extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 System.out.println("undo");
                 drawManager.undo();
+            }
+        });
+
+        historyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Reveal history");
+                historyDialog.show();
             }
         });
 
@@ -149,6 +131,6 @@ public class ToolBar extends JPanel{
         add(clearButton);
         add(saveAsButton);
         add(loadButton);
-        add(history);
+        add(historyButton);
     }
 }

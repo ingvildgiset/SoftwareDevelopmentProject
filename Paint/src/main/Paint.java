@@ -35,7 +35,7 @@ public class Paint {
 
         //create all panels
         DrawManager drawManager = new DrawManager(fixedPanel);
-        ToolBar shapeMenu = new ToolBar(drawManager);
+        ToolBar shapeMenu = new ToolBar(drawManager, frame);
         ColorBar colorMenu = new ColorBar(drawManager);
 
 
