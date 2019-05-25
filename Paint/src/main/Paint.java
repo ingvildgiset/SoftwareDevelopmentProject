@@ -27,7 +27,7 @@ public class Paint {
 
 
         JFrame frame = new JFrame("Paint");
-        frame.setSize(900, 900);
+        frame.setSize(750, 900);
 
 
         Container container = frame.getContentPane();
