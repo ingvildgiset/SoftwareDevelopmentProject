@@ -96,7 +96,6 @@ public class ToolBar extends JPanel{
 
         loadButton.addActionListener(new ActionListener() {
              @Override
-
              public void actionPerformed(ActionEvent e) {
                  JFileChooser fileChooser = new JFileChooser();
                  FileNameExtensionFilter filter = new FileNameExtensionFilter(

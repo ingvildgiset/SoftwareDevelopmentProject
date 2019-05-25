@@ -3,7 +3,6 @@ package SquareImage;
 import Shapes.Shapes;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Class for the actual Image that is showed on Canvas.

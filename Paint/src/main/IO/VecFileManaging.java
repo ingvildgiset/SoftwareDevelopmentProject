@@ -2,7 +2,6 @@ package IO;
 
 import SquareImage.SquareImage;
 import Shapes.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -15,7 +14,6 @@ import Shapes.Polygon;
 
 
 public abstract class VecFileManaging {
-
     public static SquareImage constructImageFromVecFile(String filePath) throws FileNotFoundException {
         SquareImage newImage = new SquareImage(0);
 
@@ -31,7 +29,6 @@ public abstract class VecFileManaging {
             String[] command = sc.nextLine().split(" ");
 
             //read in a figure from one line
-
             switch (command[0]){
                 case "PEN":
                     drawColour = Color.decode(command[1]);

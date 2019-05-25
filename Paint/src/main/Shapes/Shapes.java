@@ -71,7 +71,10 @@ public abstract class Shapes {
      */
     public abstract String toVecFormat();
 
-
+    /**
+     * Returns a string object to describe the shape.
+     * @return String
+     */
     public abstract String toString();
 
 

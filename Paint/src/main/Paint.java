@@ -59,7 +59,7 @@ public class Paint {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if (drawManager.getImageSize() == 0){
+                if (drawManager.numberOfShapes() == 0){
                     frame.dispose();
                 } else {
                     int confirmed = JOptionPane.showConfirmDialog(null,
