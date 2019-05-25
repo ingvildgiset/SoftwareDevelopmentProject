@@ -26,7 +26,7 @@ public class Paint {
         }
 
 
-        JFrame frame = new JFrame("Paint");
+        JFrame frame = new JFrame("Design Tool");
         frame.setSize(750, 900);
 
 
