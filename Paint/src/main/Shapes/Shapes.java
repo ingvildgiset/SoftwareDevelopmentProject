@@ -1,6 +1,5 @@
 package Shapes;
 
-import SquareImage.SquareImage;
 import java.awt.*;
 
 /**
@@ -82,9 +81,9 @@ public abstract class Shapes {
      * Method for drawing the shape object on the canvas. Customized for different shape
      * object
      * @param g A graphic object used for drawing
-     * @param image The image to be drawn at
+     * @param imageSize The size of the image to be drawn at
      */
-    public abstract void draw(Graphics g, SquareImage image);
+    public abstract void draw(Graphics g, int imageSize);
 
     /**
      * Resizes the shape object. Used when user is drawing (click and drag) on the canvas.

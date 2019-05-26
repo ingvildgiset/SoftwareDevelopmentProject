@@ -1,6 +1,5 @@
 package Shapes;
 
-import SquareImage.SquareImage;
 import java.awt.*;
 
 /**
@@ -68,22 +67,22 @@ public class Ellipse extends Shapes{
 
 
     /**
-     * Draws the ellipse on the graphicObject. Uses the image and its size to calculate the correct
+     * Draws the ellipse on the graphicObject. Uses the image size to calculate the correct
      * coordinates.
      * @param graphics Graphic object for drawing
-     * @param image The image to be drawn at
+     * @param imageSize The size of the image to be drawn at.
      */
     @Override
-    public void draw(Graphics graphics, SquareImage image){
+    public void draw(Graphics graphics, int imageSize){
         double x = Math.min((x1), (x2));
         double y = Math.min((y1), (y2));
-        x = x * image.getSize();
-        y = y * image.getSize();
+        x = x * imageSize;
+        y = y * imageSize;
         graphics.setColor(getPenColor());
-        graphics.drawOval((int)x, (int)y, (int)(width*image.getSize()), (int)(height*image.getSize()));
+        graphics.drawOval((int)x, (int)y, (int)(width*imageSize), (int)(height*imageSize));
         if(isFilled()){
             graphics.setColor(getFillColor());
-            graphics.fillOval((int)x, (int)y, (int)(width*image.getSize()), (int)(height*image.getSize()));
+            graphics.fillOval((int)x, (int)y, (int)(width*imageSize), (int)(height*imageSize));
         }
     }
 

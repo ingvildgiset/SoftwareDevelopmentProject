@@ -1,58 +1,53 @@
 package Menus;
 
-import DrawManager.DrawManager;
-
+//imports
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Vector;
 
+//dependencies
+import DrawManager.DrawManager;
+
+/**
+ * Creates a dialog box to view the edit history. The commands listed are returned from the drawManager object
+ * passed to the constructor. The commands are displayed in a scrollable JList object.
+ * A preview of the image chosen from the history will be showed to the user, the image chosen when pressing
+ * select button is the image user can continue to draw on.
+ */
 class HistoryDialog extends JDialog {
-    private DrawManager drawManager;
-    private Vector<String> listData;
-    private JList historyList;
 
-    public HistoryDialog(JFrame parent, DrawManager drawManager) {
+    HistoryDialog(JFrame parent, DrawManager drawManager) {
         super(parent, "History", true);
-        this.drawManager = drawManager;
-        this.listData = drawManager.revealImageHistory();
-
         Container cp = getContentPane();
-
         cp.setLayout(new BorderLayout());
+        setSize(170, 250);
 
+        //get command history from drawManager
+        Vector<String> listData = drawManager.revealImageHistory();
 
-
-        this.historyList = new JList(listData);
+        //create JList object with command history
+        JList<String> historyList = new JList<>(listData);
         historyList.setLayoutOrientation(JList.VERTICAL);
-
         JScrollPane listScroller = new JScrollPane(historyList);
         listScroller.setSize(new Dimension(10, 10));
-        historyList.setSelectedIndex(listData.size()-1);
+        if(listData.size() > 0){
+            //make sure to not set index = -1
+            historyList.setSelectedIndex(listData.size()-1);
+        }
 
+        //create listSelectionListener
+        historyList.addListSelectionListener(e -> drawManager.previewImageFromHistory(historyList.getSelectedIndex()));
+
+        //create select button with actionListener
         JButton selectButton = new JButton("Select");
-
-        selectButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                drawManager.newImageFromHistory(historyList.getSelectedIndex());
-                dispose(); // Closes the dialog
-            }
+        selectButton.addActionListener(e -> {
+            drawManager.newImageFromHistory(historyList.getSelectedIndex());
+            dispose(); // Closes the dialog
         });
 
-
-        historyList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                drawManager.previewImageFromHistory(historyList.getSelectedIndex());
-            }
-        });
-
+        //add to panel
         cp.add(listScroller, BorderLayout.CENTER);
         cp.add(selectButton, BorderLayout.SOUTH);
-        setSize(170, 250);
     }
 
 

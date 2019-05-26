@@ -147,11 +147,11 @@ public class DrawManager extends JPanel {
         Graphics2D graphics = (Graphics2D) g;
         for (Shapes fig: currentImage.getShapes()){
             //draw all shapes that are added to image
-            fig.draw(graphics, currentImage);
+            fig.draw(graphics, currentImage.getSize());
         }
         if (clickPoint != null) {
             //display preview of the figure
-            currentShape.draw(g, currentImage);
+            currentShape.draw(g, currentImage.getSize());
         }
     }
 
@@ -200,19 +200,25 @@ public class DrawManager extends JPanel {
     public void undo(){
        List<Shapes> currentImages = currentImage.getShapes();
         if(currentImages.size() > 0) {
+            commandHistory.add("Undo " + currentImages.get(currentImages.size() - 1).toString());
             currentImages.remove(currentImages.size() - 1 );
+            SquareImage prevVersion = new SquareImage(currentImage);
+            imageHistory.add(prevVersion);
+
         }
         repaint();
     }
 
     public void newImageFromHistory(int historyIndex){
-        //create a new image to add to the history
-        currentImage = new SquareImage(imageHistory.get(historyIndex));
-        SquareImage prevVersion = new SquareImage(currentImage);
-        imageHistory.add(prevVersion);
-        commandHistory.add("Edit from history");
-        System.out.println(imageHistory);
-        repaint();
+        if (historyIndex < imageHistory.size() && historyIndex >= 0){
+            currentImage = new SquareImage(imageHistory.get(historyIndex));
+            SquareImage prevVersion = new SquareImage(currentImage);
+            imageHistory.add(prevVersion);
+            commandHistory.add("Edit from history");
+            System.out.println(imageHistory);
+            repaint();
+        }
+
     }
 
     public void previewImageFromHistory(int historyIndex){
@@ -221,8 +227,8 @@ public class DrawManager extends JPanel {
         repaint();
     }
 
-    public int numberOfShapes(){
-        return currentImage.getShapes().size();
+    public boolean imageEdited(){
+        return currentImage.getShapes().size() > 0;
     }
 
     public Vector<String> revealImageHistory(){
@@ -230,8 +236,8 @@ public class DrawManager extends JPanel {
     }
 
     //only for internal calculations
-    private double toVecCoord(int pixel){
-        return (double)pixel/ currentImage.getSize();
+    private double toVecCoord(int canvasPos){
+        return (double)canvasPos/ currentImage.getSize();
     }
 
 }

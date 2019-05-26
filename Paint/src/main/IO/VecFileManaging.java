@@ -1,7 +1,5 @@
 package IO;
-
-import SquareImage.SquareImage;
-import Shapes.*;
+//imports
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -9,12 +7,24 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.awt.*;
+//dependencies
+import Shapes.*;
 import Shapes.Rectangle;
 import Shapes.Polygon;
+import SquareImage.SquareImage;
 
-
-public abstract class VecFileManaging {
+/**
+ * Class to handle reading and writing to file. Contains only static methods, should not be instantiated.
+ */
+public class VecFileManaging {
+    /**
+     * Creates a squareImage object based on the vec commands in file.
+     * @param filePath file to be read
+     * @return SquareImage object.
+     * @throws FileNotFoundException
+     */
     public static SquareImage constructImageFromVecFile(String filePath) throws FileNotFoundException {
+        //creating a new image
         SquareImage newImage = new SquareImage(0);
 
         //default values
@@ -75,13 +85,19 @@ public abstract class VecFileManaging {
                     break;
                 default:
                     System.out.println(command[0]);
-                    System.out.println("Reading file, invalid command");
+                    System.out.println("Invalid command");
             }
         }
         return newImage;
 
     }
 
+    /**
+     * Creates a vec file with all commands corresponding to a squareImage object.
+     * @param filename filename for new file to be saved
+     * @param image squareImage to be saved
+     * @throws IOException
+     */
     public static void createVecFileFromImage(String filename, SquareImage image) throws IOException {
         FileWriter fw = new FileWriter(filename + ".vec");
         List<Shapes> shapes = image.getShapes();

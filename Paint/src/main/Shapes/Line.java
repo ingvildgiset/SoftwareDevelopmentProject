@@ -1,6 +1,4 @@
 package Shapes;
-
-import SquareImage.SquareImage;
 import java.awt.*;
 
 /**
@@ -62,12 +60,12 @@ public class Line extends Shapes {
      * Draws the Line on the graphicObject. Uses the image and its size to calculate the correct
      * coordinates.
      * @param graphics Graphic object for drawing
-     * @param image The image to be drawn at
+     * @param imageSize The size of the image to be drawn at
      */
     @Override
-    public void draw(Graphics graphics, SquareImage image) {
+    public void draw(Graphics graphics, int imageSize) {
         graphics.setColor(getPenColor());
-        graphics.drawLine((int)((x1)*image.getSize()), (int)((y1)*image.getSize()), (int)((x2)*image.getSize()), (int)((y2)*image.getSize()));
+        graphics.drawLine((int)((x1)*imageSize), (int)((y1)*imageSize), (int)((x2)*imageSize), (int)((y2)*imageSize));
     }
 
     /**

@@ -1,6 +1,5 @@
 package Shapes;
 
-import SquareImage.SquareImage;
 import java.awt.*;
 
 /**
@@ -72,11 +71,11 @@ public class Plot extends Shapes {
     /**
      * Draws the plot on the canvas.
      * @param g Graphic object used for drawing
-     * @param image The image to be drawn at
+     * @param imageSize The image to be drawn at
      */
      @Override
-    public void draw(Graphics g, SquareImage image) {
+    public void draw(Graphics g, int imageSize) {
         g.setColor(getPenColor());
-        g.fillOval((int) ((x)*image.getSize()), (int) ((y)*image.getSize()), 3, 3);
+        g.fillOval((int) ((x)*imageSize), (int) ((y)*imageSize), 3, 3);
     }
 }

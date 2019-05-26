@@ -61,17 +61,17 @@ public class Polygon extends Shapes {
      * Draws the polygon on the graphicObject. Uses the image and its size to calculate the correct
      * coordinates.
      * @param g Graphic object for drawing
-     * @param image The image to be drawn at
+     * @param imageSize The size of the image to be drawn at
      */
     @Override
-    public void draw(Graphics g, SquareImage image) {
+    public void draw(Graphics g, int imageSize) {
         if(closed){
 
             int[] xVal = new int[xValues.size()];
             int[] yVal = new int[yValues.size()];
             for(int i = 0; i < xValues.size(); i++){
-                xVal[i] = (int) (xValues.get(i)*image.getSize());
-                yVal[i] = (int) (yValues.get(i)*image.getSize());
+                xVal[i] = (int) (xValues.get(i)*imageSize);
+                yVal[i] = (int) (yValues.get(i)*imageSize);
             }
             g.setColor(getPenColor());
             g.drawPolygon(xVal, yVal, numberOfPoints);
@@ -85,10 +85,10 @@ public class Polygon extends Shapes {
             if(numberOfPoints > 1) {
                 //know that there are at least two points
                 for (int i = 0; i < xValues.size() - 1; i++) {
-                    double x1 = xValues.get(i)*image.getSize();
-                    double y1 = yValues.get(i)*image.getSize();
-                    double x2 = xValues.get(i+1)*image.getSize();
-                    double y2 = yValues.get(i+1)*image.getSize();
+                    double x1 = xValues.get(i)*imageSize;
+                    double y1 = yValues.get(i)*imageSize;
+                    double x2 = xValues.get(i+1)*imageSize;
+                    double y2 = yValues.get(i+1)*imageSize;
                     g.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
                 }
             }

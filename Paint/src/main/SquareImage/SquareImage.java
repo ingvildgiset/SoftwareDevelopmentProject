@@ -1,8 +1,11 @@
 package SquareImage;
 
-import Shapes.Shapes;
+//imports
 import java.util.ArrayList;
 import java.util.List;
+
+//dependencies
+import Shapes.Shapes;
 
 /**
  * Class for the actual Image that is showed on Canvas.
