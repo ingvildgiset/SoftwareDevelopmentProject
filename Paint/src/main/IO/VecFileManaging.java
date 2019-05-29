@@ -21,7 +21,7 @@ public class VecFileManaging {
      * Creates a squareImage object based on the vec commands in file.
      * @param filePath file to be read
      * @return SquareImage object.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException if file does not exist
      */
     public static SquareImage constructImageFromVecFile(String filePath) throws FileNotFoundException {
         //creating a new image
@@ -96,7 +96,7 @@ public class VecFileManaging {
      * Creates a vec file with all commands corresponding to a squareImage object.
      * @param filename filename for new file to be saved
      * @param image squareImage to be saved
-     * @throws IOException
+     * @throws IOException if file can not be created 
      */
     public static void createVecFileFromImage(String filename, SquareImage image) throws IOException {
         FileWriter fw = new FileWriter(filename + ".vec");
